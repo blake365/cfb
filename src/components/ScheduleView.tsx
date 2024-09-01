@@ -32,7 +32,11 @@ const upcomingGames = [
 	},
 ]
 
-export default function ScheduleView() {
+export default async function ScheduleView() {
+	const data = await fetch('http://localhost:3001/games')
+	const games = await data.json()
+	console.log(games)
+
 	return (
 		<Card className='w-full max-w-3xl mx-auto'>
 			<CardHeader>
@@ -42,52 +46,44 @@ export default function ScheduleView() {
 			</CardHeader>
 			<CardContent>
 				<ul className='space-y-4'>
-					{upcomingGames.map((game) => (
+					{games?.map((game) => (
 						<li key={game.id}>
 							<Card>
 								<CardContent className='p-4'>
 									<div className='flex flex-wrap items-center justify-between gap-4'>
 										<div className='flex items-center space-x-4'>
 											<Avatar className='w-10 h-10'>
-												<AvatarImage
-													src={game.homeTeam.logo}
-													alt={`${game.homeTeam.name} logo`}
-												/>
 												<AvatarFallback>
-													{game.homeTeam.name.substring(0, 2)}
+													{game.team_homeTeamId.name.substring(0, 2)}
 												</AvatarFallback>
 											</Avatar>
 											<span className='font-semibold'>
-												{game.homeTeam.name}
+												{game.team_homeTeamId.name}
 											</span>
 										</div>
 										<div className='text-sm font-medium'>VS</div>
 										<div className='flex items-center space-x-4'>
 											<span className='font-semibold'>
-												{game.awayTeam.name}
+												{game.team_awayTeamId.name}
 											</span>
 											<Avatar className='w-10 h-10'>
-												<AvatarImage
-													src={game.awayTeam.logo}
-													alt={`${game.awayTeam.name} logo`}
-												/>
 												<AvatarFallback>
-													{game.awayTeam.name.substring(0, 2)}
+													{game.team_awayTeamId.name.substring(0, 2)}
 												</AvatarFallback>
 											</Avatar>
 										</div>
 									</div>
 									<div className='mt-4 text-sm text-muted-foreground'>
 										<p>
-											{new Date(game.date).toLocaleDateString('en-US', {
+											{new Date(game.gameDate).toLocaleDateString('en-US', {
 												weekday: 'long',
 												year: 'numeric',
 												month: 'long',
 												day: 'numeric',
 											})}{' '}
-											at {game.time}
+											at {game.gameTime}
 										</p>
-										<p>{game.location}</p>
+										<p>at game.location</p>
 									</div>
 								</CardContent>
 							</Card>

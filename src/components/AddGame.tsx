@@ -23,16 +23,8 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { toast } from '@/components/ui/use-toast'
-import { useQuery } from '@tanstack/react-query'
-
-// Mock data for teams
-// const teams = [
-// 	{ id: '1', name: 'Ohio State' },
-// 	{ id: '2', name: 'Michigan' },
-// 	{ id: '3', name: 'Alabama' },
-// 	{ id: '4', name: 'Georgia' },
-// 	{ id: '5', name: 'Clemson' },
-// ]
+import { Switch } from '@/components/ui/switch'
+import { useQuery, useMutation } from '@tanstack/react-query'
 
 // Mock data for game types
 const gameTypes = ['regular', 'conference championship', 'bowl', 'playoff']
@@ -44,17 +36,28 @@ const tvNetworks = [
 	{ id: 'fox', name: 'FOX' },
 	{ id: 'cbs', name: 'CBS' },
 	{ id: 'nbc', name: 'NBC' },
+	{ id: 'fs1', name: 'FS1' },
+	{ id: 'espn2', name: 'ESPN2' },
+	{ id: 'secn', name: 'SEC Network' },
+	{ id: 'accn', name: 'ACC Network' },
+	{ id: 'btn', name: 'Big Ten Network' },
+	{ id: 'pac12n', name: 'Pac-12 Network' },
+	{ id: 'nbcsn', name: 'NBC Sports Network' },
 ]
 
 // Mock data for seasons
-const seasons = [{ id: '1', year: '2024' }]
+const seasons = [
+	{ id: 0, year: 'none' },
+	{ id: '1', year: '2024' },
+]
 
 const formSchema = z
 	.object({
 		homeTeamId: z.string().min(1, 'Home team is required'),
 		awayTeamId: z.string().min(1, 'Away team is required'),
-		date: z.string().min(1, 'Date is required'),
-		time: z.string().min(1, 'Time is required'),
+		gameDate: z.string().min(1, 'Date is required'),
+		rivalry: z.boolean(),
+		// gameTime: z.string().min(1, 'Time is required'),
 		type: z.string().min(1, 'Game type is required'),
 		tvNetwork: z.string().min(1, 'TV network is required'),
 		seasonId: z.string().min(1, 'Season is required'),
@@ -72,8 +75,9 @@ export default function AddGame() {
 		defaultValues: {
 			homeTeamId: '',
 			awayTeamId: '',
-			date: '',
-			time: '',
+			rivalry: false,
+			gameDate: '',
+			// gameTime: '',
 			type: '',
 			tvNetwork: '',
 			seasonId: '',
@@ -91,57 +95,45 @@ export default function AddGame() {
 
 	const teams = query.data
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		setIsSubmitting(true)
-		// Simulate API call
-		setTimeout(() => {
-			console.log(values)
-			toast({
-				title: 'Matchup created successfully',
-				description: `${
-					teams.find((t) => t.id === values.homeTeamId)?.name
-				} vs ${
-					teams.find((t) => t.id === values.awayTeamId)?.name
-				} has been scheduled.`,
+	const mutation = useMutation({
+		mutationFn: async (game: z.infer<typeof formSchema>) => {
+			const response = await fetch('http://localhost:3001/games/new', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(game),
 			})
-			setIsSubmitting(false)
+
+			if (!response.ok) {
+				throw new Error('Failed to add game')
+			}
+		},
+		onSuccess: (data, variables, context) => {
+			console.log(data, variables, context)
+			toast({
+				title: 'Game submitted successfully',
+				description: `Game between ${variables.homeTeamId}  and ${variables.awayTeamId} has been added to the database.`,
+			})
 			form.reset()
-		}, 1000)
+		},
+		onError: (error, variables, context) => {
+			// An error happened!
+			console.log(`rolling back optimistic update with id ${context.id}`)
+		},
+	})
+
+	function onSubmit(values: z.infer<typeof formSchema>) {
+		console.log(values)
+		mutation.mutate(values)
 	}
 
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='w-full max-w-md mx-auto space-y-8'
+				className='w-full max-w-md mx-auto space-y-2'
 			>
-				<FormField
-					control={form.control}
-					name='homeTeamId'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Home Team</FormLabel>
-							<Select onValueChange={field.onChange} defaultValue={field.value}>
-								<FormControl>
-									<SelectTrigger>
-										<SelectValue placeholder='Select home team' />
-									</SelectTrigger>
-								</FormControl>
-								<SelectContent>
-									{teams.map((team) => (
-										<SelectItem key={team.id} value={team.id.toString()}>
-											{team.name}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-							<FormDescription>
-								The team playing at their home stadium.
-							</FormDescription>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
 				<FormField
 					control={form.control}
 					name='awayTeamId'
@@ -171,21 +163,65 @@ export default function AddGame() {
 				/>
 				<FormField
 					control={form.control}
-					name='date'
+					name='homeTeamId'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Date</FormLabel>
+							<FormLabel>Home Team</FormLabel>
+							<Select onValueChange={field.onChange} defaultValue={field.value}>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue placeholder='Select home team' />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{teams.map((team) => (
+										<SelectItem key={team.id} value={team.id.toString()}>
+											{team.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<FormDescription>
+								The team playing at their home stadium.
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name='rivalry'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel className='block'>Rivalry Game</FormLabel>
 							<FormControl>
-								<Input type='date' {...field} />
+								<Switch
+									checked={field.value}
+									onCheckedChange={field.onChange}
+								/>
 							</FormControl>
-							<FormDescription>The date of the game.</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
 				<FormField
 					control={form.control}
-					name='time'
+					name='gameDate'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Date</FormLabel>
+							<FormControl>
+								<Input type='datetime-local' {...field} />
+							</FormControl>
+							<FormDescription>The date of the game.</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* <FormField
+					control={form.control}
+					name='gameTime'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Time</FormLabel>
@@ -196,7 +232,7 @@ export default function AddGame() {
 							<FormMessage />
 						</FormItem>
 					)}
-				/>
+				/> */}
 				<FormField
 					control={form.control}
 					name='type'
@@ -211,8 +247,8 @@ export default function AddGame() {
 								</FormControl>
 								<SelectContent>
 									{gameTypes.map((type) => (
-										<SelectItem key={type.id} value={type.id}>
-											{type.name}
+										<SelectItem key={type} value={type}>
+											{type}
 										</SelectItem>
 									))}
 								</SelectContent>
@@ -266,7 +302,7 @@ export default function AddGame() {
 								<SelectContent>
 									{seasons.map((season) => (
 										<SelectItem key={season.id} value={season.id}>
-											{season.name}
+											{season.year}
 										</SelectItem>
 									))}
 								</SelectContent>

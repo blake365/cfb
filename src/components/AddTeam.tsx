@@ -84,7 +84,7 @@ export default function AddTeam() {
 
 	const conferences = query.data
 
-	console.log(conferences)
+	// console.log(conferences)
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
