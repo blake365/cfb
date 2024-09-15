@@ -1,16 +1,54 @@
-import Image from 'next/image'
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import ScheduleView from '@/components/ScheduleView'
+import { SimplifiedHero } from '@/components/simplified-hero'
 import { UpcomingGameCard } from '@/components/upcoming-game-card'
+import Link from 'next/link'
+import { ChevronsLeft, ChevronsRight } from 'lucide-react'
 
-export default function Home() {
+export default async function Home() {
+	const data = await fetch('http://localhost:3001/games', {
+		cache: 'no-store',
+	})
+	const games = await data.json()
+
 	return (
-		<main className='flex flex-col items-center justify-between min-h-screen p-24'>
-			<UpcomingGameCard />
-			<ScheduleView />
+		<main className='flex flex-col items-center justify-between min-h-screen'>
+			<SimplifiedHero />
+			<div className='flex flex-row justify-between w-full max-w-2xl pb-4 px-2'>
+				<Link
+					className='text-primary font-bold hover:underline flex items-center gap-2'
+					href='/games/week/1'
+				>
+					<ChevronsLeft />
+					Last Week
+				</Link>
+				<Link
+					className='text-primary font-bold hover:underline flex items-center gap-2'
+					href='/games/week/3'
+				>
+					Next Week
+					<ChevronsRight />
+				</Link>
+			</div>
+			<div className='flex flex-col w-full gap-10 items-center'>
+				{games.map((game) => (
+					<UpcomingGameCard key={game.id} game={game} />
+				))}
+			</div>
+			<div className='flex flex-row justify-between w-full max-w-2xl py-10 px-2'>
+				<Link
+					className='text-primary font-bold hover:underline flex items-center gap-2'
+					href='/games/week/1'
+				>
+					<ChevronsLeft />
+					Last Week
+				</Link>
+				<Link
+					className='text-primary font-bold hover:underline flex items-center gap-2'
+					href='/games/week/3'
+				>
+					Next Week
+					<ChevronsRight />
+				</Link>
+			</div>
 		</main>
 	)
 }
