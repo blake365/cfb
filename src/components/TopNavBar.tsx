@@ -12,6 +12,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
+import { ThemeToggle } from './ThemeToggle'
+import Link from 'next/link'
 
 export default function TopNavBar() {
 	const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -29,13 +31,16 @@ export default function TopNavBar() {
 		<nav className='bg-primary text-primary-foreground'>
 			<div className='container mx-auto px-4 py-3'>
 				<div className='flex items-center justify-between'>
-					<div className='text-xl font-bold sm:text-2xl'>Sickos</div>
+					<Link href='/' className='text-xl font-bold sm:text-2xl'>
+						Sickos
+					</Link>
 
 					{/* Desktop search */}
 					<form
 						onSubmit={handleSearch}
 						className='hidden sm:flex items-center space-x-2'
 					>
+						<ThemeToggle />
 						<div className='relative'>
 							<Search className='absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground' />
 							<Input
@@ -45,13 +50,14 @@ export default function TopNavBar() {
 								className='pl-8 bg-primary-foreground text-primary w-64'
 							/>
 						</div>
-						<Button type='submit' variant='secondary'>
+						<Button type='submit' variant='outline'>
 							Search
 						</Button>
 					</form>
 
 					{/* Mobile menu and search */}
 					<div className='flex items-center space-x-2 sm:hidden'>
+						<ThemeToggle />
 						<Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
 							<SheetTrigger asChild>
 								<Button variant='ghost' size='icon'>

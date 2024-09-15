@@ -25,6 +25,7 @@ import {
 import { toast } from '@/components/ui/use-toast'
 import { Switch } from '@/components/ui/switch'
 import { useQuery, useMutation } from '@tanstack/react-query'
+import weeks from '@/lib/weeks'
 
 // Mock data for game types
 const gameTypes = ['regular', 'conference championship', 'bowl', 'playoff']
@@ -61,6 +62,7 @@ const formSchema = z
 		type: z.string().min(1, 'Game type is required'),
 		tvNetwork: z.string().min(1, 'TV network is required'),
 		seasonId: z.string().min(1, 'Season is required'),
+		week: z.number().min(0, 'Week is required'),
 	})
 	.refine((data) => data.homeTeamId !== data.awayTeamId, {
 		message: 'Home and away teams must be different',
@@ -81,6 +83,7 @@ export default function AddGame() {
 			type: '',
 			tvNetwork: '',
 			seasonId: '',
+			week: 0,
 		},
 	})
 
@@ -125,6 +128,11 @@ export default function AddGame() {
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values)
+		const now = new Date(values.gameDate).getTime()
+		const gameWeek = weeks.find((week) => {
+			return now >= week.startDate.getTime() && now <= week.endDate.getTime()
+		})
+		values.week = gameWeek?.week || 0
 		mutation.mutate(values)
 	}
 

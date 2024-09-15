@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Providers from './providers'
+import { QueryProvider, ThemeProvider } from './providers'
 import { Toaster } from '@/components/ui/toaster'
 import TopNavBar from '@/components/TopNavBar'
 
@@ -20,11 +20,18 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<Providers>
-					<TopNavBar />
-					{children}
-					<Toaster />
-				</Providers>
+				<QueryProvider>
+					<ThemeProvider
+						attribute='class'
+						defaultTheme='system'
+						enableSystem
+						disableTransitionOnChange
+					>
+						<TopNavBar />
+						{children}
+						<Toaster />
+					</ThemeProvider>
+				</QueryProvider>
 			</body>
 		</html>
 	)

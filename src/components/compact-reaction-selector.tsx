@@ -21,6 +21,7 @@ const reactions = [
 	{ emoji: '🤮', name: 'Sicko' },
 	{ emoji: '🔥', name: 'Hot' },
 	{ emoji: '🚨', name: 'Upset Alert' },
+	{ emoji: '😴', name: 'Snoozer' },
 ]
 
 export function CompactReactionSelector({
@@ -61,6 +62,9 @@ export function CompactReactionSelector({
 		'🚨': interactions.filter(
 			(interaction) => interaction.interactionType === 'Upset Alert'
 		).length,
+		'😴': interactions.filter(
+			(interaction) => interaction.interactionType === 'Snoozer'
+		).length,
 	}
 
 	const mutation = useMutation({
@@ -94,7 +98,7 @@ export function CompactReactionSelector({
 
 	return (
 		<TooltipProvider>
-			<div className='inline-flex items-center space-x-1 rounded-xl p-2 relative z-10 border border-slate-700 bg-slate-800 shadow-md'>
+			<div className='inline-flex items-center space-x-1 rounded-xl pt-2 pb-1 py-1 relative z-10 border border-slate-700 bg-slate-300 dark:bg-slate-900 shadow-md'>
 				{reactions.map(({ emoji, name }) => (
 					<Tooltip key={emoji}>
 						<TooltipTrigger asChild>

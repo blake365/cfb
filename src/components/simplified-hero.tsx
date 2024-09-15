@@ -11,9 +11,6 @@ export function SimplifiedHero() {
 					Your destination for which college football games to watch each week.
 					Check schedules, scores, and rate match ups.
 				</p>
-				<div className='flex justify-center animate-bounce'>
-					<MoveDown className='text-primary' />
-				</div>
 			</div>
 		</div>
 	)
