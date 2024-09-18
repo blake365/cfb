@@ -4,6 +4,7 @@ import './globals.css'
 import { QueryProvider, ThemeProvider } from './providers'
 import { Toaster } from '@/components/ui/toaster'
 import TopNavBar from '@/components/TopNavBar'
+import { ReturnToTopButton } from '@/components/return-to-top-button'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
 					>
 						<TopNavBar />
 						{children}
+						<ReturnToTopButton />
 						<Toaster />
 					</ThemeProvider>
 				</QueryProvider>

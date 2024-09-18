@@ -75,6 +75,31 @@ const weeks = [
 		startDate: new Date('2024-11-24'),
 		endDate: new Date('2024-12-01'),
 	},
+	{
+		week: 15,
+		startDate: new Date('2024-12-01'),
+		endDate: new Date('2024-12-08'),
+	},
+	{
+		week: 16,
+		startDate: new Date('2024-12-08'),
+		endDate: new Date('2024-12-15'),
+	},
+	{
+		week: 17,
+		startDate: new Date('2024-12-15'),
+		endDate: new Date('2024-12-22'),
+	},
+	{
+		week: 18,
+		startDate: new Date('2024-12-22'),
+		endDate: new Date('2024-12-29'),
+	},
+	{
+		week: 19,
+		startDate: new Date('2024-12-29'),
+		endDate: new Date('2025-01-05'),
+	},
 ]
 
 export default weeks
