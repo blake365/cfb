@@ -20,7 +20,7 @@ export default async function Page({
 	// console.log(teamData)
 
 	return (
-		<main className='flex flex-col items-center min-h-screen'>
+		<main className='flex flex-col items-center min-h-screen mx-4'>
 			<div className='w-full max-w-4xl text-center my-10'>
 				<h1 className='text-4xl font-bold mb-2'>{teamData.name}</h1>
 				<h2 className='text-2xl mb-2'>{teamData.mascot}</h2>

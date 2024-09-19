@@ -1,8 +1,4 @@
-'use client'
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { MapPin, Trophy } from 'lucide-react'
+import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import Link from 'next/link'
 

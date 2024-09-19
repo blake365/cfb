@@ -50,6 +50,9 @@ export function UpcomingGameCard({ game }) {
 									className='font-semibold hover:underline text-center'
 								>
 									{game.team_awayTeamId.name}
+									{game.team_awayTeamId.apRank
+										? ` (#${game.team_awayTeamId.apRank})`
+										: ''}
 								</Link>
 
 								<span className='text-sm text-muted-foreground'>
@@ -92,6 +95,9 @@ export function UpcomingGameCard({ game }) {
 									className='font-semibold hover:underline text-center'
 								>
 									{game.team_homeTeamId.name}
+									{game.team_homeTeamId.apRank
+										? ` (#${game.team_homeTeamId.apRank})`
+										: ''}
 								</Link>
 
 								<span className='text-sm text-muted-foreground'>

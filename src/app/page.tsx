@@ -18,7 +18,7 @@ export default async function Home() {
 	const games = await data.json()
 
 	return (
-		<main className='flex flex-col items-center min-h-screen'>
+		<main className='flex flex-col items-center min-h-screen mx-4'>
 			<SimplifiedHero />
 			<WeekHeader week={null}>
 				<div className='flex flex-col w-full gap-10 items-center mb-10'>

@@ -5,9 +5,11 @@ import weeks from '@/lib/weeks'
 function WeekHeader({
 	children,
 	week,
+	nested,
 }: {
 	children: React.ReactNode
 	week: any
+	nested?: string
 }) {
 	const now = new Date().getTime()
 	let currentWeek = week
@@ -17,12 +19,14 @@ function WeekHeader({
 		})
 	}
 
+	const link = nested ? `/${nested}/` : `/week/`
+
 	return (
 		<>
 			<div className='flex flex-row justify-between w-full max-w-2xl pb-4 px-2'>
 				<Link
 					className='text-primary font-bold hover:underline flex items-center gap-2'
-					href={`/week/${currentWeek.week === 0 ? 0 : currentWeek.week - 1}`}
+					href={`${link}${currentWeek.week === 0 ? 0 : currentWeek.week - 1}`}
 				>
 					<ChevronsLeft />
 				</Link>
@@ -31,7 +35,7 @@ function WeekHeader({
 				</div>
 				<Link
 					className='text-primary font-bold hover:underline flex items-center gap-2'
-					href={`/week/${
+					href={`${link}${
 						currentWeek.week > weeks.length
 							? weeks.length
 							: currentWeek.week + 1
@@ -44,7 +48,7 @@ function WeekHeader({
 			<div className='flex flex-row justify-between w-full max-w-2xl pb-4 px-2'>
 				<Link
 					className='text-primary font-bold hover:underline flex items-center gap-2'
-					href={`/week/${currentWeek?.week === 0 ? 0 : currentWeek.week - 1}`}
+					href={`${link}${currentWeek?.week === 0 ? 0 : currentWeek.week - 1}`}
 				>
 					<ChevronsLeft />
 				</Link>
@@ -53,7 +57,7 @@ function WeekHeader({
 				</div>
 				<Link
 					className='text-primary font-bold hover:underline flex items-center gap-2'
-					href={`/week/${
+					href={`${link}${
 						currentWeek?.week === weeks.length
 							? weeks.length
 							: currentWeek.week + 1
