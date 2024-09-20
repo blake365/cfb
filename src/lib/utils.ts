@@ -24,3 +24,10 @@ export function getContrastColor(hexColor: string): string {
 	// Return black for light colors, white for dark colors
 	return luminance > 0.5 ? '#000000' : '#FFFFFF'
 }
+
+export function checkContrast(hexColor1: string, hexColor2: string): boolean {
+	const contrastColor1 = getContrastColor(hexColor1)
+	const contrastColor2 = getContrastColor(hexColor2)
+
+	return contrastColor1 === contrastColor2
+}

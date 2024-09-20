@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Menu } from 'lucide-react'
+import { Menu, House } from 'lucide-react'
 import {
 	Sheet,
 	SheetContent,
@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/sheet'
 import Link from 'next/link'
 import { ResponsiveComboBox } from '@/components/ResponsiveCombobox'
+import FavoriteTeams from '@/components/FavoriteTeams'
 
 export default function TopNavBar() {
 	return (
@@ -17,11 +18,12 @@ export default function TopNavBar() {
 			<div className='container mx-auto px-4 py-3'>
 				<div className='flex items-center justify-between'>
 					<Link href='/' className='text-xl font-bold sm:text-2xl'>
-						Home
+						<House />
 					</Link>
 
 					{/* Desktop search */}
 					<div className='hidden sm:flex items-center space-x-2'>
+						<FavoriteTeams />
 						<ResponsiveComboBox label='Find A Team' />
 						<Link href='/conferences' className='hover:underline'>
 							<Button variant='outline'>Conferences</Button>
@@ -30,6 +32,9 @@ export default function TopNavBar() {
 
 					{/* Mobile menu and search */}
 					<div className='flex items-center space-x-2 sm:hidden'>
+						<div className='w-full overflow-x-scroll'>
+							<FavoriteTeams />
+						</div>
 						<Sheet>
 							<SheetTrigger asChild>
 								<Button variant='ghost' size='icon'>

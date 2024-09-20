@@ -1,5 +1,5 @@
 import { UpcomingGameCard } from '@/components/upcoming-game-card'
-import Link from 'next/link'
+import TeamStats from '@/components/TeamStats'
 
 export default async function Page({
 	params,
@@ -14,27 +14,14 @@ export default async function Page({
 	})
 	const games = await data.json()
 
-	const team = await fetch(`http://localhost:3001/teams/name/${params.slug}`)
+	const team = await fetch(`http://localhost:3001/teams/name/${params.slug}`, {
+		cache: 'no-store',
+	})
 	const teamData = await team.json()
-
-	// console.log(teamData)
 
 	return (
 		<main className='flex flex-col items-center min-h-screen mx-4'>
-			<div className='w-full max-w-4xl text-center my-10'>
-				<h1 className='text-4xl font-bold mb-2'>{teamData.name}</h1>
-				<h2 className='text-2xl mb-2'>{teamData.mascot}</h2>
-				<Link
-					href={`/conferences/${teamData.conference.name}`}
-					className='text-xl text-muted-foreground hover:underline'
-				>
-					{teamData.conference.name}
-				</Link>
-				<p className='text-lg mt-2'>
-					Record: {teamData.wins}-{teamData.losses}
-					{teamData.ties > 0 && `-${teamData.ties}`}
-				</p>
-			</div>
+			<TeamStats teamData={teamData} />
 			<div className='flex flex-col w-full gap-10 items-center mb-20'>
 				{games.map((game) => (
 					<UpcomingGameCard key={game.id} game={game} />

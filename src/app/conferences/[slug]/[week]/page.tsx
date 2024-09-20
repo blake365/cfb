@@ -9,13 +9,6 @@ export default async function Page({
 }) {
 	// console.log(params.slug)
 	// console.log(params.week)
-	const conference = await fetch(
-		`http://localhost:3001/conferences/${params.slug}`,
-		{
-			cache: 'no-store',
-		}
-	)
-	const conferenceData = await conference.json()
 
 	const games = await fetch(
 		`http://localhost:3001/games/conference/${params.slug}/${params.week}`,
@@ -29,14 +22,6 @@ export default async function Page({
 	// console.log(teamData)
 	return (
 		<main className='flex flex-col items-center min-h-screen mx-4'>
-			<div className='w-full max-w-4xl text-center my-10'>
-				<h1 className='text-4xl font-bold mb-2'>{conferenceData.fullName}</h1>
-			</div>
-			<div className='flex flex-row flex-wrap w-full gap-4 items-center mb-10 justify-center'>
-				{conferenceData.teams.map((team) => (
-					<TinyTeamCard key={team.id} team={team} />
-				))}
-			</div>
 			<WeekHeader
 				week={{ week: Number.parseInt(params.week) }}
 				nested={`conferences/${params.slug}`}

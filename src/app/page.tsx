@@ -2,6 +2,8 @@ import { SimplifiedHero } from '@/components/simplified-hero'
 import { UpcomingGameCard } from '@/components/upcoming-game-card'
 import WeekHeader from '@/components/WeekHeader'
 import weeks from '@/lib/weeks'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Suspense } from 'react'
 
 export default async function Home() {
 	const now = new Date().getTime()
@@ -22,9 +24,11 @@ export default async function Home() {
 			<SimplifiedHero />
 			<WeekHeader week={null}>
 				<div className='flex flex-col w-full gap-10 items-center mb-10'>
-					{games.map((game) => (
-						<UpcomingGameCard key={game.id} game={game} />
-					))}
+					<Suspense fallback={<Skeleton className='w-full h-full' />}>
+						{games.map((game) => (
+							<UpcomingGameCard key={game.id} game={game} />
+						))}
+					</Suspense>
 				</div>
 			</WeekHeader>
 		</main>

@@ -30,20 +30,21 @@ export function UpcomingGameCard({ game }) {
 					<div className='flex justify-center items-center'>
 						<div className='flex flex-row flex-1 justify-center space-x-4'>
 							<div className='flex flex-col items-center'>
-								<Avatar
-									className='h-14 w-14 font-bold'
-									style={{
-										backgroundColor: game.team_awayTeamId.primaryColor,
-										color: game.team_awayTeamId.secondaryColor,
-									}}
-								>
+								<Avatar>
 									<AvatarImage
-										src={game.team_awayTeamId.icon}
+										className='overflow-visible'
+										src={game.team_awayTeamId.logo}
 										alt={`${game.team_awayTeamId.name} logo`}
 									/>
-									<AvatarFallback>
+									{/* <AvatarFallback
+										className='h-14 w-14 font-bold'
+										style={{
+											backgroundColor: game.team_awayTeamId.primaryColor,
+											color: game.team_awayTeamId.secondaryColor,
+										}}
+									>
 										{game.team_awayTeamId.abbreviation}
-									</AvatarFallback>
+									</AvatarFallback> */}
 								</Avatar>
 								<Link
 									href={`/teams/${game.team_awayTeamId.name}`}
@@ -75,20 +76,20 @@ export function UpcomingGameCard({ game }) {
 						</div>
 						<div className='flex flex-row flex-1 justify-center space-x-4'>
 							<div className='flex flex-col items-center'>
-								<Avatar
-									className='h-14 w-14 font-bold'
-									style={{
-										backgroundColor: game.team_homeTeamId.primaryColor,
-										color: game.team_homeTeamId.secondaryColor,
-									}}
-								>
+								<Avatar>
 									<AvatarImage
-										src={game.team_homeTeamId.icon}
+										src={game.team_homeTeamId.logo}
 										alt={`${game.team_homeTeamId.name} logo`}
 									/>
-									<AvatarFallback>
+									{/* <AvatarFallback
+										className='h-14 w-14 font-bold'
+										style={{
+											backgroundColor: game.team_homeTeamId.primaryColor,
+											color: game.team_homeTeamId.secondaryColor,
+										}}
+									>
 										{game.team_homeTeamId.abbreviation}
-									</AvatarFallback>
+									</AvatarFallback> */}
 								</Avatar>
 								<Link
 									href={`/teams/${game.team_homeTeamId.name}`}
