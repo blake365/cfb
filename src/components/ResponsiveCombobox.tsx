@@ -42,7 +42,10 @@ export function ResponsiveComboBox({ label }: { label: string }) {
 		return (
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
-					<Button variant='outline' className='min-w-60 justify-start'>
+					<Button
+						variant='outline'
+						className='min-w-60 justify-start shadow-md'
+					>
 						{selectedTeam ? (
 							<div className='flex items-center gap-2'>
 								<Search className='h-4 w-4' />
@@ -70,7 +73,7 @@ export function ResponsiveComboBox({ label }: { label: string }) {
 	return (
 		<Drawer open={open} onOpenChange={setOpen}>
 			<DrawerTrigger asChild>
-				<Button variant='secondary' className='justify-center w-full'>
+				<Button variant='outline' className='justify-start w-full shadow-md'>
 					{selectedTeam ? (
 						<div className='flex items-center gap-2'>
 							<Search className='h-4 w-4' />

@@ -15,7 +15,7 @@ import FavoriteTeams from '@/components/FavoriteTeams'
 export default function TopNavBar() {
 	return (
 		<nav className='bg-muted'>
-			<div className='container mx-auto px-4 py-3'>
+			<div className='container mx-auto px-4 py-2'>
 				<div className='flex items-center justify-between'>
 					<Link href='/' className='text-xl font-bold sm:text-2xl'>
 						<House />
@@ -25,7 +25,7 @@ export default function TopNavBar() {
 					<div className='hidden sm:flex items-center space-x-2'>
 						<FavoriteTeams />
 						<ResponsiveComboBox label='Find A Team' />
-						<Link href='/conferences' className='hover:underline'>
+						<Link href='/conferences' className='hover:underline shadow-md'>
 							<Button variant='outline'>Conferences</Button>
 						</Link>
 					</div>
@@ -51,8 +51,8 @@ export default function TopNavBar() {
 									<SheetClose asChild>
 										<Link href='/conferences' className='mt-4'>
 											<Button
-												variant='ghost'
-												className='w-full justify-center mt-4'
+												variant='outline'
+												className='w-full justify-center mt-4 shadow-md'
 											>
 												Conferences
 											</Button>

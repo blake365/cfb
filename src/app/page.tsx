@@ -1,35 +1,29 @@
 import { SimplifiedHero } from '@/components/simplified-hero'
-import { UpcomingGameCard } from '@/components/upcoming-game-card'
 import WeekHeader from '@/components/WeekHeader'
-import weeks from '@/lib/weeks'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Suspense } from 'react'
+import GameFeed from '@/components/GameFeed'
+
+function GameFeedSkeleton() {
+	return (
+		<div className='max-w-2xl space-y-4'>
+			<Skeleton className='h-24 w-full bg-muted' />
+			<Skeleton className='h-24 w-full bg-muted' />
+			<Skeleton className='h-24 w-full bg-muted' />
+		</div>
+	)
+}
 
 export default async function Home() {
-	const now = new Date().getTime()
-	const currentWeek = weeks.find((week) => {
-		return now >= week.startDate.getTime() && now <= week.endDate.getTime()
-	})
-
-	const data = await fetch(
-		`http://localhost:3001/games/week/${currentWeek.week}`,
-		{
-			cache: 'no-store',
-		}
-	)
-	const games = await data.json()
-
 	return (
 		<main className='flex flex-col items-center min-h-screen mx-4'>
 			<SimplifiedHero />
 			<WeekHeader week={null}>
-				<div className='flex flex-col w-full gap-10 items-center mb-10'>
-					<Suspense fallback={<Skeleton className='w-full h-full' />}>
-						{games.map((game) => (
-							<UpcomingGameCard key={game.id} game={game} />
-						))}
-					</Suspense>
-				</div>
+				<Suspense fallback={<GameFeedSkeleton />}>
+					<div className='flex flex-col w-full items-center mb-10'>
+						<GameFeed />
+					</div>
+				</Suspense>
 			</WeekHeader>
 		</main>
 	)

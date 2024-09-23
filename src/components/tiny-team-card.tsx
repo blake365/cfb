@@ -6,19 +6,19 @@ export function TinyTeamCard({ team, size }: { team: any; size: number }) {
 	return (
 		<Link href={`/teams/${team.name}`}>
 			<Avatar
-				className={`h-${size} w-${size} font-bold ${
+				className={`h-${size} w-${size} font-bold shadow-md ${
 					size <= 20 ? 'text-xs' : ''
 				} hover:border-primary border border-muted-foreground overflow-hidden hover:shadow-md hover:bg-muted`}
 			>
 				<AvatarImage src={team.logo} alt={`${team.name} logo`} />
-				{/* <AvatarFallback
+				<AvatarFallback
 					style={{
-						backgroundColor: team.primaryColor,
-						color: team.secondaryColor,
+						// backgroundColor: team.primaryColor,
+						color: team.primaryColor,
 					}}
 				>
 					{team.abbreviation}
-				</AvatarFallback> */}
+				</AvatarFallback>
 			</Avatar>
 		</Link>
 	)
