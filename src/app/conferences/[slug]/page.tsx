@@ -1,5 +1,6 @@
-import WeekHeader from "@/components/WeekHeader";
-import { UpcomingGameCard } from "@/components/upcoming-game-card";
+import { Suspense } from "react";
+import GameFeedSkeleton from "@/components/GameFeedSkeleton";
+import GameFeed from "@/components/GameFeed";
 import weeks from "@/lib/weeks";
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -11,22 +12,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	const games = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/conference/${params.slug}/${currentWeek.week}`,
-		{
-			cache: "no-store",
-		},
 	);
 	const gamesData = await games.json();
 	// console.log(gamesData)
 
 	return (
 		<main className="flex flex-col items-center min-h-screen mx-4">
-			<WeekHeader week={null} nested={`conferences/${params.slug}`}>
-				<div className="flex flex-col w-full gap-10 items-center mb-10">
-					{gamesData.map((game) => (
-						<UpcomingGameCard key={game.id} game={game} />
-					))}
-				</div>
-			</WeekHeader>
+			<div className="flex flex-col w-full gap-10 items-center mb-10">
+				<Suspense fallback={<GameFeedSkeleton />}>
+					<GameFeed
+						initialGames={gamesData}
+						week={currentWeek}
+						nested={`conferences/${params.slug}`}
+					/>
+				</Suspense>
+			</div>
 		</main>
 	);
 }

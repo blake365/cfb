@@ -17,6 +17,11 @@ export function UpcomingGameCard({ game, pageType }) {
 		winner = game.awayTeamScore > game.homeTeamScore ? "away" : "home";
 	}
 
+	// console.log(
+	// 	`${game.team_awayTeamId.name} @ ${game.team_homeTeamId.name}`,
+	// 	game.interestScore,
+	// );
+
 	return (
 		<div className="relative w-full max-w-2xl">
 			<Card className="w-full border-slate-800 hover:shadow-lg px-4 pt-4 bg-muted">

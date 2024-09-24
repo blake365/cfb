@@ -1,28 +1,44 @@
-import weeks from "@/lib/weeks";
+"use client";
+
 import { UpcomingGameCard } from "@/components/upcoming-game-card";
+import { useState, useEffect } from "react";
+import WeekHeader from "@/components/WeekHeader";
 
-async function GameFeed() {
-	const now = new Date().getTime();
-	const currentWeek = weeks.find((week) => {
-		return now >= week.startDate.getTime() && now <= week.endDate.getTime();
-	});
+function GameFeed({ initialGames, week, nested }) {
+	const [matchups, setMatchups] = useState(initialGames);
+	const [sortKey, setSortKey] = useState("interestScore");
+	const [sortOrder, setSortOrder] = useState("desc");
 
-	const data = await fetch(
-		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/week/${currentWeek.week}`,
-		{
-			cache: "no-store",
-		},
-	);
-	const games = await data.json();
+	useEffect(() => {
+		const sortedMatchups = [...matchups].sort((a, b) => {
+			// console.log(a[sortKey]);
+			if (a[sortKey] < b[sortKey]) return sortOrder === "asc" ? -1 : 1;
+			if (a[sortKey] > b[sortKey]) return sortOrder === "asc" ? 1 : -1;
+			return 0;
+		});
+		setMatchups(sortedMatchups);
+	}, [sortKey, sortOrder]);
 
-	// console.log(games[10]);
+	const handleSort = (key: string) => {
+		setSortOrder((current) => (current === "asc" ? "desc" : "asc"));
+		setSortKey(key);
+	};
 
 	return (
-		<div className="flex flex-col gap-10">
-			{games.map((game) => (
-				<UpcomingGameCard key={game.id} game={game} />
-			))}
-		</div>
+		<>
+			<WeekHeader
+				week={week}
+				sortKey={sortKey}
+				sortOrder={sortOrder}
+				onSort={handleSort}
+				nested={nested}
+			/>
+			<div className="flex flex-col gap-10">
+				{matchups.map((game) => (
+					<UpcomingGameCard key={game.id} game={game} />
+				))}
+			</div>
+		</>
 	);
 }
 
