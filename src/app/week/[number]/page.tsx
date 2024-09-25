@@ -6,6 +6,7 @@ export default async function Page({ params }: { params: { number: string } }) {
 	// console.log(params.number)
 	const data = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/week/${params.number}`,
+		{ next: { revalidate: 900 } },
 	);
 	const games = await data.json();
 

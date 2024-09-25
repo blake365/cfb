@@ -95,7 +95,7 @@ function TeamStats({ teamData }) {
 										return indexA - indexB;
 									})
 									.map(([key, value]) => {
-										console.log(key, value);
+										// console.log(key, value);
 										if (key === "id") return;
 										if (key === "teamName") return;
 										if (key === "teamId") return;

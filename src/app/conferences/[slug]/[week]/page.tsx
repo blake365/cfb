@@ -12,6 +12,7 @@ export default async function Page({
 
 	const games = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/conference/${params.slug}/${params.week}`,
+		{ next: { revalidate: 900 } },
 	);
 	const gamesData = await games.json();
 	// console.log(gamesData)
@@ -19,7 +20,7 @@ export default async function Page({
 	// console.log(teamData)
 	return (
 		<main className="flex flex-col items-center min-h-screen mx-4">
-			<div className="flex flex-col w-full gap-10 items-center mb-10">
+			<div className="flex flex-col w-full items-center mb-10">
 				<Suspense fallback={<GameFeedSkeleton />}>
 					<GameFeed
 						initialGames={gamesData}

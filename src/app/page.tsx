@@ -12,6 +12,7 @@ export default async function Home() {
 
 	const data = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/week/${currentWeek.week}`,
+		{ next: { revalidate: 900 } },
 	);
 	const games = await data.json();
 

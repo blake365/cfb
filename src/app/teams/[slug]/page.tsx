@@ -11,11 +11,13 @@ export default async function Page({
 	// console.log(params.slug)
 	const data = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/team/${params.slug}`,
+		{ next: { revalidate: 3600 } },
 	);
 	const games = await data.json();
 
 	const team = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/teams/name/${params.slug}`,
+		{ next: { revalidate: 3600 } },
 	);
 	const teamData = await team.json();
 	// console.log(teamData);

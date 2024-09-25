@@ -12,6 +12,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	const games = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/conference/${params.slug}/${currentWeek.week}`,
+		{ next: { revalidate: 900 } },
 	);
 	const gamesData = await games.json();
 	// console.log(gamesData)
