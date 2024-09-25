@@ -14,10 +14,10 @@ interface CompactReactionSelectorProps {
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 const reactions = [
-	{ emoji: "👀", name: "Curious" },
+	{ emoji: "🧐", name: "Curious" },
 	{ emoji: "🤮", name: "Sicko" },
-	{ emoji: "🔥", name: "Hot" },
-	{ emoji: "🚨", name: "Upset Alert" },
+	{ emoji: "🤩", name: "Starry" },
+	{ emoji: "🫨", name: "Panic" },
 	{ emoji: "😴", name: "Snoozer" },
 ];
 
@@ -46,17 +46,17 @@ export function CompactReactionSelector({
 	// console.log(interactions)
 
 	const reactionCounts = {
-		"👀": interactions.filter(
+		"🧐": interactions.filter(
 			(interaction) => interaction.interactionType === "Curious",
 		).length,
 		"🤮": interactions.filter(
 			(interaction) => interaction.interactionType === "Sicko",
 		).length,
-		"🔥": interactions.filter(
-			(interaction) => interaction.interactionType === "Hot",
+		"🤩": interactions.filter(
+			(interaction) => interaction.interactionType === "Starry",
 		).length,
-		"🚨": interactions.filter(
-			(interaction) => interaction.interactionType === "Upset Alert",
+		"🫨": interactions.filter(
+			(interaction) => interaction.interactionType === "Panic",
 		).length,
 		"😴": interactions.filter(
 			(interaction) => interaction.interactionType === "Snoozer",
@@ -100,10 +100,10 @@ export function CompactReactionSelector({
 							<Button
 								variant="none"
 								size="sm"
-								className="px-2 rounded-full relative hover:scale-150 transition-all duration-200"
+								className="px-1 rounded-full relative hover:scale-150 transition-all duration-200"
 								onClick={() => handleReaction(emoji, name)}
 							>
-								<span className="text-2xl">{emoji}</span>
+								<span className="text-3xl">{emoji}</span>
 								{reactionCounts[emoji] > 0 && (
 									<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
 										{reactionCounts[emoji]}
