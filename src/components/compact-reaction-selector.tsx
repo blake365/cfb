@@ -69,6 +69,7 @@ export function CompactReactionSelector({
 				`${process.env.NEXT_PUBLIC_SERVER_URL}/interactions/${gameId}`,
 				{
 					method: "POST",
+					credentials: "include",
 					body: JSON.stringify({
 						interactionType: name,
 					}),
@@ -79,7 +80,7 @@ export function CompactReactionSelector({
 			}
 		},
 		onSuccess: (data, variables, context) => {
-			console.log(data, variables, context);
+			// console.log(data, variables, context);
 			query.refetch();
 		},
 		onError: (error, variables, context) => {
