@@ -3,33 +3,51 @@
 import { UpcomingGameCard } from "@/components/upcoming-game-card";
 import { useState, useEffect } from "react";
 import WeekHeader from "@/components/WeekHeader";
+import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
+
+// Function to get the initial sort state
+const getSortState = () => {
+	return {
+		sortKey: "interestScore",
+		sortOrder: "desc",
+	};
+};
 
 function GameFeed({ initialGames, week, nested }) {
 	const [matchups, setMatchups] = useState(initialGames);
-	const [sortKey, setSortKey] = useState("interestScore");
-	const [sortOrder, setSortOrder] = useState("desc");
+
+	const queryClient = useQueryClient();
+
+	const { data: sortState } = useQuery({
+		queryKey: ["sortState"],
+		queryFn: getSortState,
+	});
 
 	useEffect(() => {
+		if (!sortState) return;
+
 		const sortedMatchups = [...matchups].sort((a, b) => {
-			// console.log(a[sortKey]);
-			if (a[sortKey] < b[sortKey]) return sortOrder === "asc" ? -1 : 1;
-			if (a[sortKey] > b[sortKey]) return sortOrder === "asc" ? 1 : -1;
+			if (a[sortState.sortKey] < b[sortState.sortKey])
+				return sortState.sortOrder === "asc" ? -1 : 1;
+			if (a[sortState.sortKey] > b[sortState.sortKey])
+				return sortState.sortOrder === "asc" ? 1 : -1;
 			return 0;
 		});
 		setMatchups(sortedMatchups);
-	}, [sortKey, sortOrder]);
+	}, [sortState]);
 
 	const handleSort = (key: string) => {
-		setSortOrder((current) => (current === "asc" ? "desc" : "asc"));
-		setSortKey(key);
+		const newSortOrder = sortState.sortOrder === "asc" ? "desc" : "asc";
+		const newSortState = { sortKey: key, sortOrder: newSortOrder };
+		queryClient.setQueryData(["sortState"], newSortState);
 	};
 
 	return (
 		<>
 			<WeekHeader
 				week={week}
-				sortKey={sortKey}
-				sortOrder={sortOrder}
+				sortKey={sortState?.sortKey}
+				sortOrder={sortState?.sortOrder}
 				onSort={handleSort}
 				nested={nested}
 			/>

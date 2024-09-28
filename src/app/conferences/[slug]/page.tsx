@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<main className="flex flex-col items-center min-h-screen mx-4">
-			<div className="flex flex-col w-full gap-10 items-center mb-10">
+			<div className="flex flex-col w-full items-center mb-10">
 				<Suspense fallback={<GameFeedSkeleton />}>
 					<GameFeed
 						initialGames={gamesData}

@@ -27,7 +27,7 @@ export function AvatarGroupComponent({
 		: [];
 
 	return (
-		<div className="overflow-x-auto max-w-[calc(100vw-10rem)]">
+		<div className="overflow-auto max-w-[calc(100vw-10rem)] py-1">
 			<div className="flex items-center">
 				<div className="flex -space-x-4 sm:hover:space-x-2 hover:space-x-0 transition-all duration-300 ease-in-out">
 					{displayAvatars.map((avatar) => (

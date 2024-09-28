@@ -15,10 +15,10 @@ import FavoriteTeams from "@/components/FavoriteTeams";
 export default function TopNavBar() {
 	return (
 		<nav className="bg-muted">
-			<div className="container mx-auto px-4 py-2">
-				<div className="flex items-center justify-between">
+			<div className="container">
+				<div className="flex items-center justify-between h-[64px]">
 					<Link href="/" className="text-xl font-bold sm:text-2xl">
-						<House className="w-9 h-9 hover:fill-current" />
+						<House className="w-8 h-8 hover:text-primary" />
 					</Link>
 
 					{/* Desktop search */}
@@ -38,7 +38,7 @@ export default function TopNavBar() {
 						<Sheet>
 							<SheetTrigger asChild>
 								<Button variant="ghost" size="icon">
-									<Menu className="h-5 w-5" />
+									<Menu className="h-8 w-8" />
 									<span className="sr-only">Open menu</span>
 								</Button>
 							</SheetTrigger>

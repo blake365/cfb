@@ -3,12 +3,12 @@ export const edge = true
 
 export default async function handler(request, response) {
 
-	const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/games/getMediaInformation/hello`)
+	const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/games/getMediaInformation/hello`)
 
-	const result2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/games/getBettingLines/hello`)
+	const result2 = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/games/getBettingLines/hello`)
 
 
-	const result3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cron/updateInterestScores`)
+	const result3 = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cron/updateInterestScores`)
 
 	const data = await result.json()
 	const data2 = await result2.json()
