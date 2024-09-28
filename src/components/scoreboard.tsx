@@ -79,7 +79,7 @@ export function Scoreboard({
 		return null;
 	}
 
-	if (gameState === undefined) {
+	if (gameState === undefined || gameState?.error || gameState === null) {
 		enableQuery = false;
 		return null;
 	}
@@ -94,19 +94,20 @@ export function Scoreboard({
 							<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
 						)}
 					</div>
+
 					<div className="text-center flex flex-col items-center justify-center">
-						<Badge
-							variant="destructive"
-							className="text-sm relative -top-7 left-0"
-						>
-							LIVE-ish
-						</Badge>
 						<div className="mb-2">
 							<p className=" font-medium">Quarter</p>
 							<p className="text-xl font-bold">{gameState.period}</p>
 						</div>
 						<Badge variant="secondary" className="text-sm px-3 py-1">
 							{gameState.clock}
+						</Badge>
+						<Badge
+							variant="destructive"
+							className="text-sm relative -top-[120px] "
+						>
+							LIVE-ish
 						</Badge>
 					</div>
 					<div className="text-center mx-auto flex-1">
@@ -116,7 +117,7 @@ export function Scoreboard({
 						)}
 					</div>
 				</div>
-				<div className="text-muted-foreground text-sm">
+				<div className="text-muted-foreground text-sm -mt-6">
 					{gameState.lastPlay}
 				</div>
 			</CardContent>
