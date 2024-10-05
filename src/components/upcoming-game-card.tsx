@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CalendarDays, Clock, MapPin, Tv, Monitor } from "lucide-react";
@@ -5,6 +7,19 @@ import { CompactReactionSelector } from "./compact-reaction-selector";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Scoreboard } from "./scoreboard";
+import { useQuery } from "@tanstack/react-query";
+
+function hexToRgb(hex: string) {
+	hex = hex.replace(/^#/, "");
+
+	// Parse r, g, b values
+	let bigint = parseInt(hex, 16);
+	let r = (bigint >> 16) & 255;
+	let g = (bigint >> 8) & 255;
+	let b = bigint & 255;
+
+	return `${r}, ${g}, ${b}`;
+}
 
 export function UpcomingGameCard({ game, pageType }) {
 	if (!game) {
@@ -22,9 +37,48 @@ export function UpcomingGameCard({ game, pageType }) {
 	// 	game.interestScore,
 	// );
 
+	const { data: favoriteTeams } = useQuery({
+		queryKey: ["favoriteTeams"],
+	});
+
+	let favInGame = false;
+	let favIsAway = false;
+	let favIsHome = false;
+	if (favoriteTeams && Array.isArray(favoriteTeams)) {
+		favInGame = favoriteTeams.some(
+			(team) =>
+				team.name === game.team_awayTeamId.name ||
+				team.name === game.team_homeTeamId.name,
+		);
+
+		for (const team of favoriteTeams) {
+			if (team.name === game.team_awayTeamId.name) {
+				favIsAway = true;
+			}
+		}
+
+		for (const team of favoriteTeams) {
+			if (team.name === game.team_homeTeamId.name) {
+				favIsHome = true;
+			}
+		}
+	}
+
 	return (
-		<div className="relative w-full max-w-2xl">
-			<Card className="w-full border-slate-800 hover:shadow-lg px-4 pt-4 bg-muted">
+		<div
+			className="relative w-full max-w-2xl"
+			style={{
+				boxShadow: favInGame
+					? `0 0 10px 5px rgba(${
+							favIsHome
+								? hexToRgb(game.team_homeTeamId.primaryColor)
+								: hexToRgb(game.team_awayTeamId.primaryColor)
+						}, 0.7)`
+					: "none", // Add glow effect
+				borderRadius: "1rem",
+			}}
+		>
+			<Card className="w-full border-slate-800 px-4 pt-4 bg-muted">
 				<CardContent className="">
 					{pageType === "team" && (
 						<div className="text-sm text-muted-foreground">

@@ -23,18 +23,44 @@ function GameFeed({ initialGames, week, nested }) {
 		queryFn: getSortState,
 	});
 
+	// access the favorite teams from react query
+	const { data: favoriteTeams } = useQuery({
+		queryKey: ["favoriteTeams"],
+	});
+
+	// console.log("favoriteTeams", favoriteTeams);
+
 	useEffect(() => {
 		if (!sortState) return;
 
 		const sortedMatchups = [...matchups].sort((a, b) => {
+			// Ensure favoriteTeams is an array
+			if (
+				Array.isArray(favoriteTeams) &&
+				sortState.sortKey === "interestScore"
+			) {
+				const aIsFavorite = favoriteTeams.some(
+					(team) =>
+						team.name === a.homeTeamName || team.name === a.awayTeamName,
+				);
+				const bIsFavorite = favoriteTeams.some(
+					(team) =>
+						team.name === b.homeTeamName || team.name === b.awayTeamName,
+				);
+
+				if (aIsFavorite && !bIsFavorite) return -1;
+				if (!aIsFavorite && bIsFavorite) return 1;
+			}
+
 			if (a[sortState.sortKey] < b[sortState.sortKey])
 				return sortState.sortOrder === "asc" ? -1 : 1;
 			if (a[sortState.sortKey] > b[sortState.sortKey])
 				return sortState.sortOrder === "asc" ? 1 : -1;
 			return 0;
 		});
+
 		setMatchups(sortedMatchups);
-	}, [sortState]);
+	}, [sortState, favoriteTeams]); // Add favoriteTeams to the dependency array
 
 	const handleSort = (key: string) => {
 		const newSortOrder = sortState.sortOrder === "asc" ? "desc" : "asc";
@@ -43,7 +69,7 @@ function GameFeed({ initialGames, week, nested }) {
 	};
 
 	return (
-		<>
+		<div className="w-full">
 			<WeekHeader
 				week={week}
 				sortKey={sortState?.sortKey}
@@ -51,12 +77,12 @@ function GameFeed({ initialGames, week, nested }) {
 				onSort={handleSort}
 				nested={nested}
 			/>
-			<div className="flex flex-col gap-10">
+			<div className="flex flex-col gap-10 mt-4 mx-4">
 				{matchups.map((game) => (
 					<UpcomingGameCard key={game.id} game={game} />
 				))}
 			</div>
-		</>
+		</div>
 	);
 }
 

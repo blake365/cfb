@@ -68,7 +68,8 @@ export function Scoreboard({
 		enabled: enableQuery,
 		placeholderData: placeholderData,
 		refetchInterval: 10000,
-		refetchIntervalInBackground: true,
+		refetchOnMount: true,
+		// refetchIntervalInBackground: true,
 	});
 
 	const gameState = query.data;
