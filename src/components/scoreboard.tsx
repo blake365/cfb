@@ -87,39 +87,32 @@ export function Scoreboard({
 
 	return (
 		<Card className="w-full max-w-2xl mx-auto">
-			<CardContent className="p-4">
-				<div className="flex flex-row justify-between gap-4 mb-2">
-					<div className="text-center mx-auto flex-1">
-						<p className="text-4xl font-bold">{gameState.awayTeamPoints}</p>
-						{gameState.possession === "away" && (
-							<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
-						)}
+			<CardContent className="">
+				<div className="flex flex-col items-center justify-center">
+					<div className="text-xs bg-red-500 text-white py-1 w-full text-center mb-2">
+						LIVE-ish
 					</div>
-
-					<div className="text-center flex flex-col items-center justify-center">
-						<div className="mb-2">
-							<p className=" font-medium">Quarter</p>
-							<p className="text-xl font-bold">{gameState.period}</p>
+					<div className="flex flex-row justify-between gap-4 w-full px-8">
+						<div className="text-center mx-auto flex-1">
+							<p className="text-4xl font-bold">{gameState.awayTeamPoints}</p>
+							{gameState.possession === "away" && (
+								<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
+							)}
 						</div>
-						<Badge variant="secondary" className="text-sm px-3 py-1">
-							{gameState.clock}
-						</Badge>
-						<Badge
-							variant="destructive"
-							className="text-sm relative -top-[120px] "
-						>
-							LIVE-ish
-						</Badge>
+						<div className="text-center flex flex-col items-center justify-center">
+							<div className="mb-2">
+								<p className=" font-medium">Quarter</p>
+								<p className="text-xl font-bold">{gameState.period}</p>
+								<div className="text-sm px-3 py-1">{gameState.clock}</div>
+							</div>
+						</div>
+						<div className="text-center mx-auto flex-1">
+							<p className="text-4xl font-bold">{gameState.homeTeamPoints}</p>
+							{gameState.possession === "home" && (
+								<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
+							)}
+						</div>
 					</div>
-					<div className="text-center mx-auto flex-1">
-						<p className="text-4xl font-bold">{gameState.homeTeamPoints}</p>
-						{gameState.possession === "home" && (
-							<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
-						)}
-					</div>
-				</div>
-				<div className="text-muted-foreground text-sm -mt-6">
-					{gameState.lastPlay}
 				</div>
 			</CardContent>
 		</Card>
