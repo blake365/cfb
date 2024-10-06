@@ -46,7 +46,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 				) : (
 					<GameFeed
 						initialGames={gamesData}
-						week={currentWeek.week}
+						week={currentWeek}
 						nested={`conferences/${params.slug}`}
 					/>
 				)}

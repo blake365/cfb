@@ -57,7 +57,7 @@ export function Scoreboard({
 				}),
 			});
 
-			console.log("response", response);
+			// console.log("response", response);
 
 			if (!response.ok) {
 				return null;
@@ -67,7 +67,7 @@ export function Scoreboard({
 		},
 		enabled: enableQuery,
 		placeholderData: placeholderData,
-		refetchInterval: 10000,
+		refetchInterval: 10000000,
 		refetchOnMount: true,
 		// refetchIntervalInBackground: true,
 	});

@@ -26,7 +26,7 @@ export function UpcomingGameCard({ game, pageType }) {
 		return <div>No game data available</div>;
 	}
 
-	console.log(game.interestScore);
+	// console.log(game.interestScore);
 	let winner = null;
 	if (game.awayTeamScore !== null && game.homeTeamScore !== null) {
 		winner = game.awayTeamScore > game.homeTeamScore ? "away" : "home";

@@ -3,10 +3,8 @@
 import { SimplifiedHero } from "@/components/simplified-hero";
 import GameFeed from "@/components/GameFeed";
 import weeks from "@/lib/weeks";
-import GameFeedSkeleton from "@/components/GameFeedSkeleton";
-
 import { useQuery } from "@tanstack/react-query";
-
+import GameFeedSkeleton from "@/components/GameFeedSkeleton";
 const fetchGames = async (week) => {
 	const response = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/week/${week}`,
@@ -32,10 +30,10 @@ export default function Home() {
 	} = useQuery({
 		queryKey: ["games", currentWeek],
 		queryFn: () => fetchGames(currentWeek),
-		enabled: !!currentWeek,
 		refetchInterval: 1000 * 60 * 1,
 	});
 
+	console.log(status);
 	// console.log(games);
 
 	if (error) return <div>An error occurred: {error.message}</div>;

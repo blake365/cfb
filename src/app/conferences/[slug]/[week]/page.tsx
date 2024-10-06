@@ -19,8 +19,8 @@ export default function Page({
 }: {
 	params: { slug: string; week: string };
 }) {
-	// console.log(params.slug);
-	// console.log(params.week);
+	console.log(params.slug);
+	console.log(params.week);
 
 	const {
 		data: gamesData,
@@ -44,7 +44,7 @@ export default function Page({
 				) : (
 					<GameFeed
 						initialGames={gamesData}
-						week={params.week}
+						week={{ week: Number.parseInt(params.week) }}
 						nested={`conferences/${params.slug}`}
 					/>
 				)}
