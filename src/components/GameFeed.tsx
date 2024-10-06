@@ -21,6 +21,7 @@ function GameFeed({ initialGames, week, nested }) {
 	const { data: sortState } = useQuery({
 		queryKey: ["sortState"],
 		queryFn: getSortState,
+		initialData: getSortState,
 	});
 
 	// access the favorite teams from react query
@@ -60,7 +61,7 @@ function GameFeed({ initialGames, week, nested }) {
 		});
 
 		setMatchups(sortedMatchups);
-	}, [sortState, favoriteTeams]); // Add favoriteTeams to the dependency array
+	}, [sortState, favoriteTeams]);
 
 	const handleSort = (key: string) => {
 		const newSortOrder = sortState.sortOrder === "asc" ? "desc" : "asc";
