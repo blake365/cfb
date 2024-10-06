@@ -67,7 +67,7 @@ export function Scoreboard({
 		},
 		enabled: enableQuery,
 		placeholderData: placeholderData,
-		refetchInterval: 10000000,
+		refetchInterval: 10000,
 		refetchOnMount: true,
 		// refetchIntervalInBackground: true,
 	});
