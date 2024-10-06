@@ -133,8 +133,12 @@ export function UpcomingGameCard({ game, pageType }) {
 								<span className="text-xl font-bold">{game.awayTeamScore}</span>
 							</div>
 						</div>
-						<div className="text-center flex flex-row items-center justify-center space-x-2">
-							<span className="text-lg">at</span>
+						<div className="text-center flex flex-col items-center justify-center">
+							{game.rivalry ? (
+								<span className="text-2xl text-muted-foreground">😡</span>
+							) : (
+								<span className="text-lg">at</span>
+							)}
 						</div>
 						<div className="flex flex-row flex-1 justify-center space-x-4">
 							<div

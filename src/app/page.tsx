@@ -33,7 +33,7 @@ export default function Home() {
 		refetchInterval: 1000 * 60 * 1,
 	});
 
-	console.log(status);
+	// console.log(status);
 	// console.log(games);
 
 	if (error) return <div>An error occurred: {error.message}</div>;
