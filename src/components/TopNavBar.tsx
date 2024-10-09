@@ -11,16 +11,19 @@ import {
 import Link from "next/link";
 import { ResponsiveComboBox } from "@/components/ResponsiveCombobox";
 import FavoriteTeams from "@/components/FavoriteTeams";
+import { ToggleView } from "./ToggleView";
 
 export default function TopNavBar() {
 	return (
 		<nav className="bg-muted">
 			<div className="container">
 				<div className="flex items-center justify-between h-[64px]">
-					<Link href="/" className="text-xl font-bold sm:text-2xl">
-						<House className="w-8 h-8 hover:text-primary" />
-					</Link>
-
+					<div className="flex items-center space-x-2">
+						<Link href="/" className="text-xl font-bold sm:text-2xl">
+							<House className="w-8 h-8 hover:text-primary" />
+						</Link>
+						<ToggleView />
+					</div>
 					{/* Desktop search */}
 					<div className="hidden sm:flex items-center space-x-2">
 						<FavoriteTeams />

@@ -3,14 +3,20 @@
 import { UpcomingGameCard } from "@/components/upcoming-game-card";
 import { useState, useEffect } from "react";
 import WeekHeader from "@/components/WeekHeader";
-import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
-
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { Table, TableHeader, TableBody, TableRow, TableCell } from "./ui/table";
+import { GameTableRow } from "./gameTableRow";
+import { CalendarDays, Clock, MapPin, Tv } from "lucide-react";
 // Function to get the initial sort state
 const getSortState = () => {
 	return {
 		sortKey: "interestScore",
 		sortOrder: "desc",
 	};
+};
+
+const getView = () => {
+	return JSON.parse(localStorage.getItem("view"));
 };
 
 function GameFeed({ initialGames, week, nested }) {
@@ -23,6 +29,13 @@ function GameFeed({ initialGames, week, nested }) {
 		queryFn: getSortState,
 		initialData: getSortState,
 	});
+
+	const { data: view } = useQuery({
+		queryKey: ["view"],
+		queryFn: getView,
+	});
+
+	console.log("view", view);
 
 	// access the favorite teams from react query
 	const { data: favoriteTeams } = useQuery({
@@ -68,6 +81,67 @@ function GameFeed({ initialGames, week, nested }) {
 		const newSortState = { sortKey: key, sortOrder: newSortOrder };
 		queryClient.setQueryData(["sortState"], newSortState);
 	};
+
+	if (view === "table") {
+		return (
+			<div className="w-full">
+				<WeekHeader
+					week={week}
+					sortKey={sortState?.sortKey}
+					sortOrder={sortState?.sortOrder}
+					onSort={handleSort}
+					nested={nested}
+				/>
+				<div className="flex flex-col gap-10 mt-4 mx-4">
+					<div className="max-w-sm md:max-w-2xl lg:max-w-3xl overflow-x-scroll">
+						<Table className="">
+							<TableHeader>
+								<TableRow>
+									<TableCell>Away Team</TableCell>
+									<TableCell>Away Score</TableCell>
+									<TableCell>Home Team</TableCell>
+									<TableCell>Home Score</TableCell>
+									<TableCell>Rival</TableCell>
+									<TableCell>
+										<div className="flex flex-row items-center">
+											<CalendarDays className="h-4 w-4 mr-1 text-muted-foreground" />
+											Date
+										</div>
+									</TableCell>
+									<TableCell>
+										<div className="flex flex-row items-center">
+											<Clock className="h-4 w-4 mr-1 text-muted-foreground" />
+											Time
+										</div>
+									</TableCell>
+									<TableCell>
+										<div className="flex flex-row items-center">
+											<Tv className="h-4 w-4 mr-1 text-muted-foreground" />
+											Media
+										</div>
+									</TableCell>
+									{/* <TableCell>
+									<div className="flex flex-row items-center">
+										<MapPin className="h-4 w-4 mr-1 text-muted-foreground" />
+										Venue
+									</div>
+								</TableCell> */}
+									<TableCell>Spread</TableCell>
+									<TableCell>Over/Under</TableCell>
+									<TableCell>Interest Score</TableCell>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{matchups.map((game) => (
+									<GameTableRow key={game.id} game={game} />
+								))}
+							</TableBody>
+						</Table>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="w-full">
