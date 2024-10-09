@@ -92,43 +92,25 @@ function GameFeed({ initialGames, week, nested }) {
 					onSort={handleSort}
 					nested={nested}
 				/>
-				<div className="flex flex-col gap-10 mt-4 mx-4">
-					<div className="max-w-sm md:max-w-2xl lg:max-w-3xl overflow-x-scroll">
-						<Table className="">
+				<div className="mt-4 mx-4">
+					<div className="max-w-sm sm:max-w-2xl lg:max-w-3xl overflow-x-auto overflow-y-clip">
+						<Table className="w-full overflow-y-clip">
 							<TableHeader>
 								<TableRow>
 									<TableCell>Away Team</TableCell>
-									<TableCell>Away Score</TableCell>
+									<TableCell className="border-r border-muted">Score</TableCell>
 									<TableCell>Home Team</TableCell>
-									<TableCell>Home Score</TableCell>
-									<TableCell>Rival</TableCell>
-									<TableCell>
-										<div className="flex flex-row items-center">
-											<CalendarDays className="h-4 w-4 mr-1 text-muted-foreground" />
-											Date
-										</div>
+									<TableCell className="border-r border-muted">Score</TableCell>
+									<TableCell className="border-r border-muted">Rival</TableCell>
+									<TableCell className="border-r border-muted">Date</TableCell>
+									<TableCell className="border-r border-muted">Time</TableCell>
+									<TableCell className="border-r border-muted">
+										Outlet
 									</TableCell>
-									<TableCell>
-										<div className="flex flex-row items-center">
-											<Clock className="h-4 w-4 mr-1 text-muted-foreground" />
-											Time
-										</div>
+									<TableCell className="border-r border-muted">
+										Spread
 									</TableCell>
-									<TableCell>
-										<div className="flex flex-row items-center">
-											<Tv className="h-4 w-4 mr-1 text-muted-foreground" />
-											Media
-										</div>
-									</TableCell>
-									{/* <TableCell>
-									<div className="flex flex-row items-center">
-										<MapPin className="h-4 w-4 mr-1 text-muted-foreground" />
-										Venue
-									</div>
-								</TableCell> */}
-									<TableCell>Spread</TableCell>
 									<TableCell>Over/Under</TableCell>
-									<TableCell>Interest Score</TableCell>
 								</TableRow>
 							</TableHeader>
 							<TableBody>

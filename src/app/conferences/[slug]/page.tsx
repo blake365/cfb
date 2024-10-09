@@ -7,6 +7,7 @@ import weeks from "@/lib/weeks";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchGames = async (conference, week) => {
+	console.log("i am fetching games");
 	const response = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/conference/${conference}/${week}`,
 	);
@@ -29,9 +30,9 @@ export default function Page({ params }: { params: { slug: string } }) {
 		isFetching,
 		error,
 	} = useQuery({
-		queryKey: ["conference games", currentWeek.week],
+		queryKey: ["conference games", `${currentWeek.week} + ${params.slug}`],
 		queryFn: () => fetchGames(params.slug, currentWeek.week),
-		enabled: !!params.slug,
+		refetchOnMount: true,
 		refetchInterval: 1000 * 60 * 1,
 	});
 

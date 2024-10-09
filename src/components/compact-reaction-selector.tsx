@@ -23,6 +23,8 @@ const reactions = [
 
 export function CompactReactionSelector({
 	gameId,
+	table,
+	interestScore,
 }: CompactReactionSelectorProps) {
 	// console.log(gameId)
 
@@ -92,23 +94,34 @@ export function CompactReactionSelector({
 		mutation.mutate({ emoji: emoji, name: name });
 	}
 
+	let overallClasses =
+		"inline-flex items-center space-x-1 rounded-xl pt-2 pb-1 py-1 relative z-10 border border-slate-700 bg-slate-300 dark:bg-slate-900 shadow-md";
+	let spanClasses =
+		"absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center";
+	let emojiSize = "text-3xl";
+	if (table) {
+		overallClasses =
+			"w-full inline-flex items-center space-x-6 pl-4 pt-2 py-1 sticky left-0";
+		spanClasses =
+			"absolute -top-2 -right-3 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center";
+		emojiSize = "text-2xl";
+	}
+
 	return (
 		<TooltipProvider>
-			<div className="inline-flex items-center space-x-1 rounded-xl pt-2 pb-1 py-1 relative z-10 border border-slate-700 bg-slate-300 dark:bg-slate-900 shadow-md">
+			<div className={overallClasses}>
 				{reactions.map(({ emoji, name }) => (
 					<Tooltip key={emoji}>
 						<TooltipTrigger asChild>
 							<Button
 								variant="none"
-								size="sm"
+								size={table ? "xs" : "sm"}
 								className="px-1 rounded-full relative hover:scale-150 transition-all duration-200"
 								onClick={() => handleReaction(emoji, name)}
 							>
-								<span className="text-3xl">{emoji}</span>
+								<span className={emojiSize}>{emoji}</span>
 								{reactionCounts[emoji] > 0 && (
-									<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
-										{reactionCounts[emoji]}
-									</span>
+									<span className={spanClasses}>{reactionCounts[emoji]}</span>
 								)}
 							</Button>
 						</TooltipTrigger>
@@ -117,6 +130,11 @@ export function CompactReactionSelector({
 						</TooltipContent>
 					</Tooltip>
 				))}
+				{table && (
+					<div className="text-xs text-muted-foreground">
+						Interest Score: {interestScore}
+					</div>
+				)}
 			</div>
 		</TooltipProvider>
 	);

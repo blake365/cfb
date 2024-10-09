@@ -65,8 +65,16 @@ export function GameTableRow({ game, pageType }) {
 	}
 
 	return (
-		<TableRow>
-			<TableCell>
+		<TableRow
+			subRow={
+				<CompactReactionSelector
+					gameId={game.id}
+					table
+					interestScore={game.interestScore}
+				/>
+			}
+		>
+			<TableCell className="max-w-[140px]">
 				<div
 					className={`flex flex-row items-center p-1 ${
 						winner === "away" &&
@@ -89,17 +97,22 @@ export function GameTableRow({ game, pageType }) {
 						{game.team_awayTeamId.name}
 					</Link>
 				</div>
-				<span className="text-muted-foreground text-xs">
-					Record: {game.team_awayTeamId.wins} - {game.team_awayTeamId.losses}
-					{" | "}
-					Conf: {game.team_awayTeamId.conferenceWins} -{" "}
-					{game.team_awayTeamId.conferenceLosses}
-				</span>
+				<div className="flex flex-wrap">
+					<span className="text-muted-foreground text-xs">
+						Record: {game.team_awayTeamId.wins} - {game.team_awayTeamId.losses}
+					</span>
+					<span className="text-muted-foreground text-xs">
+						Conf: {game.team_awayTeamId.conferenceWins} -{" "}
+						{game.team_awayTeamId.conferenceLosses}
+					</span>
+				</div>
 			</TableCell>
-			<TableCell>{game.awayTeamScore}</TableCell>
-			<TableCell>
+			<TableCell className="border-r border-muted text-center">
+				{game.awayTeamScore}
+			</TableCell>
+			<TableCell className="max-w-[140px]">
 				<div
-					className={`flex flex-row font-semibold items-center px-2 py-1 ${
+					className={`flex flex-row font-semibold items-center p-1 ${
 						winner === "home" &&
 						"border border-green-500 bg-green-500/10 rounded-3xl"
 					}`}
@@ -119,43 +132,49 @@ export function GameTableRow({ game, pageType }) {
 						{game.team_homeTeamId.name}
 					</Link>
 				</div>
-				<span className="text-muted-foreground text-xs">
-					Record: {game.team_homeTeamId.wins} - {game.team_homeTeamId.losses}
-					{" | "}
-					Conf: {game.team_homeTeamId.conferenceWins} -{" "}
-					{game.team_homeTeamId.conferenceLosses}
-				</span>
+				<div className="flex flex-wrap">
+					<span className="text-muted-foreground text-xs mr-1">
+						Record: {game.team_homeTeamId.wins} - {game.team_homeTeamId.losses}
+					</span>
+					<span className="text-muted-foreground text-xs">
+						Conf: {game.team_homeTeamId.conferenceWins} -{" "}
+						{game.team_homeTeamId.conferenceLosses}
+					</span>
+				</div>
 			</TableCell>
-			<TableCell>{game.homeTeamScore}</TableCell>
-			<TableCell>
+			<TableCell className="border-r border-muted text-center">
+				{game.homeTeamScore}
+			</TableCell>
+			<TableCell className="border-r border-muted">
 				{game.rivalry ? (
 					<span className="text-xl text-muted-foreground">😡</span>
 				) : (
 					""
 				)}
 			</TableCell>
-			<TableCell className=" text-xs">
+			<TableCell className=" text-xs border-r border-muted">
 				{new Date(game.gameStart).toLocaleDateString("en-US", {
 					weekday: "long",
 					month: "long",
 					day: "numeric",
 				})}
 			</TableCell>
-			<TableCell className=" text-xs">
+			<TableCell className=" text-xs border-r border-muted">
 				{new Date(game.gameStart).toLocaleTimeString("en-US", {
 					hour: "2-digit",
 					minute: "2-digit",
 				})}
 			</TableCell>
-			<TableCell className=" text-xs">
+			<TableCell className=" text-xs border-r border-muted">
 				{game.tvNetwork?.toUpperCase().slice(0, 6)}
 			</TableCell>
 			{/* <TableCell className=" text-xs">
 				<span>{game.location}</span>
 			</TableCell> */}
-			<TableCell className=" text-xs">{game.spread}</TableCell>
+			<TableCell className=" text-xs border-r border-muted">
+				{game.spread}
+			</TableCell>
 			<TableCell className=" text-xs">{game.overUnder}</TableCell>
-			<TableCell className=" text-xs">{game.interestScore}</TableCell>
 		</TableRow>
 	);
 }
