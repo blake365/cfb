@@ -32,16 +32,16 @@ export function AvatarGroupComponent({
 				<div className="flex -space-x-4 sm:hover:space-x-2 hover:space-x-0 transition-all duration-300 ease-in-out">
 					{displayAvatars.map((avatar) => (
 						<Link href={`/teams/${avatar.name}`} key={avatar.id} className="">
-							<Avatar className="w-10 h-10 border border-background hover:z-10 bg-background hover:border-primary shadow-md">
+							<Avatar className="w-10 h-10 border border-muted-foreground hover:z-10 bg-background  hover:bg-muted hover:border-primary shadow-md overflow-hidden ">
 								<AvatarImage src={avatar.logo} alt={avatar.name} />
-								{/* <AvatarFallback
+								<AvatarFallback
 									style={{
 										backgroundColor: avatar.primaryColor,
 										color: avatar.secondaryColor,
 									}}
 								>
 									{avatar.abbreviation}
-								</AvatarFallback> */}
+								</AvatarFallback>
 							</Avatar>
 						</Link>
 					))}

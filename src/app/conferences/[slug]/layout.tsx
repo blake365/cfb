@@ -20,7 +20,7 @@ export default async function WeeksLayout({
 			</div>
 			<div className="flex flex-row flex-wrap w-full gap-4 items-center mb-4 justify-center">
 				{conferenceData.teams.map((team) => (
-					<TinyTeamCard key={team.id} team={team} size={12} />
+					<TinyTeamCard key={team.id} team={team} size={12} withWins={true} />
 				))}
 			</div>
 			{children}

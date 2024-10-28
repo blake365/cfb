@@ -1,34 +1,74 @@
-import { UpcomingGameCard } from "@/components/upcoming-game-card";
-import TeamStats from "@/components/TeamStats";
+"use client";
 
-export default async function Page({
+import TeamStats from "@/components/TeamStats";
+import { useQuery } from "@tanstack/react-query";
+import GameFeedSkeleton from "@/components/GameFeedSkeleton";
+import GameFeed from "@/components/GameFeed";
+
+const fetchGames = async (slug) => {
+	console.log("i am fetching games");
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/team/${slug}`,
+	);
+	if (!response.ok) {
+		throw new Error("Network response was not ok");
+	}
+	return response.json();
+};
+
+const fetchTeamStats = async (slug) => {
+	console.log("i am fetching team stats");
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_SERVER_URL}/teams/name/${slug}`,
+	);
+	return response.json();
+};
+
+export default function Page({
 	params,
-	searchParams,
 }: {
 	params: { slug: string };
-	searchParams: { [key: string]: string | string[] | undefined };
 }) {
-	// console.log(params.slug)
-	const data = await fetch(
-		`${process.env.NEXT_PUBLIC_SERVER_URL}/games/team/${params.slug}`,
-		{ next: { revalidate: 3600 } },
-	);
-	const games = await data.json();
+	const {
+		data: games,
+		status,
+		error,
+	} = useQuery({
+		queryKey: ["team games", params.slug],
+		queryFn: () => fetchGames(params.slug),
+		refetchOnMount: true,
+		refetchInterval: 1000 * 60 * 1,
+	});
 
-	const team = await fetch(
-		`${process.env.NEXT_PUBLIC_SERVER_URL}/teams/name/${params.slug}`,
-		{ next: { revalidate: 3600 } },
-	);
-	const teamData = await team.json();
-	// console.log(teamData);
+	const {
+		data: teamData,
+		status: teamStatus,
+		error: teamError,
+	} = useQuery({
+		queryKey: ["team stats", params.slug],
+		queryFn: () => fetchTeamStats(params.slug),
+	});
+
+	console.log(teamData);
+
+	if (error) return <div>An error occurred: {error.message}</div>;
+
+	if (teamError) return <div>An error occurred: {teamError.message}</div>;
 
 	return (
-		<main className="flex flex-col items-center min-h-screen mx-4">
-			<TeamStats teamData={teamData} />
-			<div className="flex flex-col w-full gap-10 items-center mb-20">
-				{games.map((game) => (
-					<UpcomingGameCard key={game.id} game={game} pageType="team" />
-				))}
+		<main className="flex flex-col items-center min-h-screen mx-auto max-w-4xl ">
+			{teamStatus === "success" && <TeamStats teamData={teamData} />}
+			<div className="flex flex-col items-center mb-20">
+				{status === "pending" ? (
+					<GameFeedSkeleton />
+				) : (
+					<GameFeed
+						teamPage={true}
+						initialGames={games}
+						week={null}
+						nested={`teams/${params.slug}`}
+					/>
+				)}
 			</div>
 		</main>
 	);

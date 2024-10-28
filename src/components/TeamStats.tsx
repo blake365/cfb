@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
@@ -59,6 +61,10 @@ function TeamStats({ teamData }) {
 						<p className="text-xl">
 							Record: {teamData.wins}-{teamData.losses}
 							{teamData.ties > 0 && `-${teamData.ties}`}
+						</p>
+						<p className="text-xl">
+							Conf: {teamData.conferenceWins}-{teamData.conferenceLosses}
+							{teamData.conferenceTies > 0 && `-${teamData.conferenceTies}`}
 						</p>
 
 						<div>
@@ -126,7 +132,7 @@ function TeamStats({ teamData }) {
 										return (
 											<div
 												key={key}
-												className="rounded p-3"
+												className="rounded p-3 flex flex-col justify-between"
 												style={{
 													backgroundColor: `rgba(${Number.parseInt(
 														contrastColor.slice(1, 3),

@@ -15,19 +15,26 @@ const getSortState = () => {
 	};
 };
 
+const getTeamPageSortState = () => {
+	return {
+		sortKey: "date",
+		sortOrder: "asc",
+	};
+};
+
 const getView = () => {
 	return JSON.parse(localStorage.getItem("view"));
 };
 
-function GameFeed({ initialGames, week, nested }) {
+function GameFeed({ initialGames, week, nested, teamPage }) {
 	const [matchups, setMatchups] = useState(initialGames);
 
 	const queryClient = useQueryClient();
 
 	const { data: sortState } = useQuery({
 		queryKey: ["sortState"],
-		queryFn: getSortState,
-		initialData: getSortState,
+		queryFn: teamPage ? getTeamPageSortState : getSortState,
+		initialData: teamPage ? getTeamPageSortState : getSortState,
 	});
 
 	const { data: view } = useQuery({
@@ -50,6 +57,7 @@ function GameFeed({ initialGames, week, nested }) {
 		const sortedMatchups = [...matchups].sort((a, b) => {
 			// Ensure favoriteTeams is an array
 			if (
+				!teamPage &&
 				Array.isArray(favoriteTeams) &&
 				sortState.sortKey === "interestScore"
 			) {
@@ -85,13 +93,15 @@ function GameFeed({ initialGames, week, nested }) {
 	if (view === "table") {
 		return (
 			<div className="w-full">
-				<WeekHeader
-					week={week}
-					sortKey={sortState?.sortKey}
-					sortOrder={sortState?.sortOrder}
-					onSort={handleSort}
-					nested={nested}
-				/>
+				{!teamPage && (
+					<WeekHeader
+						week={week}
+						sortKey={sortState?.sortKey}
+						sortOrder={sortState?.sortOrder}
+						onSort={handleSort}
+						nested={nested}
+					/>
+				)}
 				<div className="mt-4 mx-4">
 					<div className="max-w-sm sm:max-w-2xl lg:max-w-3xl overflow-x-auto overflow-y-clip">
 						<Table className="w-full overflow-y-clip">
@@ -127,13 +137,15 @@ function GameFeed({ initialGames, week, nested }) {
 
 	return (
 		<div className="w-full">
-			<WeekHeader
-				week={week}
-				sortKey={sortState?.sortKey}
-				sortOrder={sortState?.sortOrder}
-				onSort={handleSort}
-				nested={nested}
-			/>
+			{!teamPage && (
+				<WeekHeader
+					week={week}
+					sortKey={sortState?.sortKey}
+					sortOrder={sortState?.sortOrder}
+					onSort={handleSort}
+					nested={nested}
+				/>
+			)}
 			<div className="flex flex-col gap-10 mt-4 mx-4">
 				{matchups.map((game) => (
 					<UpcomingGameCard key={game.id} game={game} />

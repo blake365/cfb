@@ -1,6 +1,5 @@
 "use client";
 
-import { Suspense } from "react";
 import GameFeedSkeleton from "@/components/GameFeedSkeleton";
 import GameFeed from "@/components/GameFeed";
 import weeks from "@/lib/weeks";
