@@ -2,7 +2,7 @@
 	"crons": [
 		{
 			"path": "/api/cron/scoreboard",
-			"schedule": "*/2 14-23 * * 6"
+			"schedule": "*/2 14-23 * * 6,0"
 		},
 		{
 			"path": "/api/cron/scoreboard",
@@ -10,43 +10,11 @@
 		},
 		{
 			"path": "/api/cron/scoreboard",
-			"schedule": "*/2 12-23 * * 5"
+			"schedule": "*/2 12-23,0-6 * * 5,6"
 		},
 		{
 			"path": "/api/cron/scoreboard",
-			"schedule": "*/2 0-6 * * 6"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 12-23 * * 4"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 0-6 * * 5"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 12-23 * * 1"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 0-6 * * 2"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 12-23 * * 2"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 0-6 * * 3"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 12-23 * * 3"
-		},
-		{
-			"path": "/api/cron/scoreboard",
-			"schedule": "*/5 0-6 * * 4"
+			"schedule": "*/5 18-23,0-6 * * 1-4"
 		},
 		{
 			"path": "/api/cron/rankings",
@@ -58,7 +26,7 @@
 		},
 		{
 			"path": "/api/cron/records",
-			"schedule": "0 14-23 * * 6"
+			"schedule": "0 14-23 * * 6,0"
 		},
 		{
 			"path": "/api/cron/records",
@@ -66,47 +34,11 @@
 		},
 		{
 			"path": "/api/cron/records",
-			"schedule": "0 12-23 * * 5"
+			"schedule": "0 12-23,0-6 * * 4,5,6"
 		},
 		{
 			"path": "/api/cron/records",
-			"schedule": "0 0-6 * * 6"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 12-23 * * 4"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 0-6 * * 5"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 8 * * 1"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 12-23 * * 1"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 0-6 * * 2"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 12-23 * * 2"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 0-6 * * 3"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 12-23 * * 3"
-		},
-		{
-			"path": "/api/cron/records",
-			"schedule": "0 0-6 * * 4"
+			"schedule": "0 12-23,0-6 * * 1-3"
 		}
 	]
 }
