@@ -64,7 +64,7 @@ export function GameTableRow({ game, pageType }) {
 		}
 	}
 
-	const {
+	let {
 		isGameActive,
 		isError,
 		isLoading,
@@ -90,7 +90,7 @@ export function GameTableRow({ game, pageType }) {
 		shownHomeScore = homeScore;
 	}
 
-	console.log(shownAwayScore, shownHomeScore);
+	// console.log(shownAwayScore, shownHomeScore);
 
 	return (
 		<TableRow
@@ -104,8 +104,8 @@ export function GameTableRow({ game, pageType }) {
 			subRowTwo={
 				isGameActive ? (
 					<div>
-						<span className="text-red-500">Live-ish</span> Quarter {period} |{" "}
-						{clock} | {lastPlay}
+						<span className="text-red-500 mx-4">Live-ish</span> Quarter {period}{" "}
+						| {clock} | {lastPlay}
 					</div>
 				) : null
 			}

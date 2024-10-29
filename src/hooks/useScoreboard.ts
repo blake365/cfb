@@ -81,11 +81,11 @@ export function useScoreboard({
 		isGameActive,
 		isError,
 		isLoading,
-		homeScore: data?.homeTeamPoints ?? 0,
-		awayScore: data?.awayTeamPoints ?? 0,
-		period: data?.period ?? 0,
-		clock: data?.clock ?? "00:00",
-		possession: data?.possession ?? "home",
+		homeScore: data?.homeTeamPoints,
+		awayScore: data?.awayTeamPoints,
+		period: data?.period,
+		clock: data?.clock,
+		possession: data?.possession,
 		lastPlay: data?.lastPlay,
 	};
 }

@@ -67,17 +67,17 @@ const TableRow = React.forwardRef<
 			)}
 			{...props}
 		/>
-		{subRow && (
-			<tr className={cn("p-0 border-b transition-colors bg-muted", className)}>
-				<TableCell className="p-0" colSpan={100}>
-					<div className="">{subRow}</div>
-				</TableCell>
-			</tr>
-		)}
 		{subRowTwo && (
 			<tr className={cn("p-0 border-b transition-colors bg-muted", className)}>
 				<TableCell className="p-0" colSpan={100}>
 					<div className="">{subRowTwo}</div>
+				</TableCell>
+			</tr>
+		)}
+		{subRow && (
+			<tr className={cn("p-0 border-b transition-colors bg-muted", className)}>
+				<TableCell className="p-0" colSpan={100}>
+					<div className="">{subRow}</div>
 				</TableCell>
 			</tr>
 		)}
