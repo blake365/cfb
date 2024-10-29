@@ -1,13 +1,13 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CalendarDays, Clock, MapPin, Tv, Monitor } from "lucide-react";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { CompactReactionSelector } from "./compact-reaction-selector";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-import { Scoreboard } from "./scoreboard";
 import { useQuery } from "@tanstack/react-query";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { useScoreboard } from "@/hooks/useScoreboard";
+import { CIcon } from "@coreui/icons-react";
+import { cilAmericanFootball } from "@coreui/icons";
 
 function hexToRgb(hex: string) {
 	hex = hex.replace(/^#/, "");
@@ -64,6 +64,34 @@ export function GameTableRow({ game, pageType }) {
 		}
 	}
 
+	const {
+		isGameActive,
+		isError,
+		isLoading,
+		homeScore,
+		awayScore,
+		period,
+		clock,
+		possession,
+		lastPlay,
+	} = useScoreboard({
+		gameStart: game.gameStart,
+		gameCompleted: game.gameCompleted,
+		gameId: game.id,
+		homeTeamId: game.team_homeTeamId.id,
+		awayTeamId: game.team_awayTeamId.id,
+	});
+
+	let shownAwayScore = game.awayTeamScore;
+	let shownHomeScore = game.homeTeamScore;
+
+	if (isGameActive) {
+		shownAwayScore = awayScore;
+		shownHomeScore = homeScore;
+	}
+
+	console.log(shownAwayScore, shownHomeScore);
+
 	return (
 		<TableRow
 			subRow={
@@ -73,77 +101,97 @@ export function GameTableRow({ game, pageType }) {
 					interestScore={game.interestScore}
 				/>
 			}
+			subRowTwo={
+				isGameActive ? (
+					<div>
+						<span className="text-red-500">Live-ish</span> Quarter {period} |{" "}
+						{clock} | {lastPlay}
+					</div>
+				) : null
+			}
 		>
 			<TableCell className="max-w-[140px]">
-				<div
-					className={`flex flex-row items-center p-1 ${
-						winner === "away" &&
-						"border border-green-500 bg-green-500/10 rounded-3xl"
-					}`}
-				>
-					<Avatar className="h-5 w-5 mr-1">
-						<AvatarImage
-							className="overflow-visible"
-							src={game.team_awayTeamId.logo}
-							alt={`${game.team_awayTeamId.name} logo`}
-						/>
-					</Avatar>
-					<Link
-						href={`/teams/${game.team_awayTeamId.name}`}
-						className="font-semibold hover:underline "
+				<div className="flex flex-col">
+					<div
+						className={`flex flex-row items-center p-1 ${
+							winner === "away" &&
+							"border border-green-500 bg-green-500/10 rounded-3xl"
+						}`}
 					>
-						{game.team_awayTeamId.apRank &&
-							`(#${game.team_awayTeamId.apRank}) `}
-						{game.team_awayTeamId.name}
-					</Link>
-				</div>
-				<div className="flex flex-wrap">
-					<span className="text-muted-foreground text-xs">
-						Record: {game.team_awayTeamId.wins} - {game.team_awayTeamId.losses}
-					</span>
-					<span className="text-muted-foreground text-xs">
-						Conf: {game.team_awayTeamId.conferenceWins} -{" "}
-						{game.team_awayTeamId.conferenceLosses}
-					</span>
+						<Avatar className="h-5 w-5 mr-1">
+							<AvatarImage
+								className="overflow-visible"
+								src={game.team_awayTeamId.logo}
+								alt={`${game.team_awayTeamId.name} logo`}
+							/>
+						</Avatar>
+						<Link
+							href={`/teams/${game.team_awayTeamId.name}`}
+							className="font-semibold hover:underline "
+						>
+							{game.team_awayTeamId.apRank &&
+								`(#${game.team_awayTeamId.apRank}) `}
+							{game.team_awayTeamId.name}
+						</Link>
+					</div>
+					<div className="flex flex-col">
+						<span className="text-muted-foreground text-xs">
+							Record: {game.team_awayTeamId.wins} -{" "}
+							{game.team_awayTeamId.losses}
+						</span>
+						<span className="text-muted-foreground text-xs">
+							Conf: {game.team_awayTeamId.conferenceWins} -{" "}
+							{game.team_awayTeamId.conferenceLosses}
+						</span>
+					</div>
 				</div>
 			</TableCell>
 			<TableCell className="border-r border-muted text-center">
-				{game.awayTeamScore}
+				{isGameActive && possession === "away" && (
+					<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
+				)}
+				{shownAwayScore}
 			</TableCell>
 			<TableCell className="max-w-[140px]">
-				<div
-					className={`flex flex-row font-semibold items-center p-1 ${
-						winner === "home" &&
-						"border border-green-500 bg-green-500/10 rounded-3xl"
-					}`}
-				>
-					<Avatar className="h-5 w-5 mr-1">
-						<AvatarImage
-							src={game.team_homeTeamId.logo}
-							alt={`${game.team_homeTeamId.name} logo`}
-						/>
-					</Avatar>
-					<Link
-						href={`/teams/${game.team_homeTeamId.name}`}
-						className="hover:underline"
+				<div className="flex flex-col">
+					<div
+						className={`flex flex-row font-semibold items-center p-1 ${
+							winner === "home" &&
+							"border border-green-500 bg-green-500/10 rounded-3xl"
+						}`}
 					>
-						{game.team_homeTeamId.apRank &&
-							`(#${game.team_homeTeamId.apRank}) `}
-						{game.team_homeTeamId.name}
-					</Link>
-				</div>
-				<div className="flex flex-wrap">
-					<span className="text-muted-foreground text-xs mr-1">
-						Record: {game.team_homeTeamId.wins} - {game.team_homeTeamId.losses}
-					</span>
-					<span className="text-muted-foreground text-xs">
-						Conf: {game.team_homeTeamId.conferenceWins} -{" "}
-						{game.team_homeTeamId.conferenceLosses}
-					</span>
+						<Avatar className="h-5 w-5 mr-1">
+							<AvatarImage
+								src={game.team_homeTeamId.logo}
+								alt={`${game.team_homeTeamId.name} logo`}
+							/>
+						</Avatar>
+						<Link
+							href={`/teams/${game.team_homeTeamId.name}`}
+							className="hover:underline"
+						>
+							{game.team_homeTeamId.apRank &&
+								`(#${game.team_homeTeamId.apRank}) `}
+							{game.team_homeTeamId.name}
+						</Link>
+					</div>
+					<div className="flex flex-col">
+						<div className="text-muted-foreground text-xs mr-1">
+							Record: {game.team_homeTeamId.wins} -{" "}
+							{game.team_homeTeamId.losses}
+						</div>
+						<div className="text-muted-foreground text-xs">
+							Conf: {game.team_homeTeamId.conferenceWins} -{" "}
+							{game.team_homeTeamId.conferenceLosses}
+						</div>
+					</div>
 				</div>
 			</TableCell>
 			<TableCell className="border-r border-muted text-center">
-				{game.homeTeamScore}
+				{isGameActive && possession === "home" && (
+					<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
+				)}
+				{shownHomeScore}
 			</TableCell>
 			<TableCell className="border-r border-muted">
 				{game.rivalry ? (

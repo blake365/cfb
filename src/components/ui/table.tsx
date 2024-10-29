@@ -53,8 +53,11 @@ TableFooter.displayName = "TableFooter";
 
 const TableRow = React.forwardRef<
 	HTMLTableRowElement,
-	React.HTMLAttributes<HTMLTableRowElement> & { subRow?: React.ReactNode }
->(({ className, subRow, ...props }, ref) => (
+	React.HTMLAttributes<HTMLTableRowElement> & {
+		subRow?: React.ReactNode;
+		subRowTwo?: React.ReactNode;
+	}
+>(({ className, subRow, subRowTwo, ...props }, ref) => (
 	<>
 		<tr
 			ref={ref}
@@ -68,6 +71,13 @@ const TableRow = React.forwardRef<
 			<tr className={cn("p-0 border-b transition-colors bg-muted", className)}>
 				<TableCell className="p-0" colSpan={100}>
 					<div className="">{subRow}</div>
+				</TableCell>
+			</tr>
+		)}
+		{subRowTwo && (
+			<tr className={cn("p-0 border-b transition-colors bg-muted", className)}>
+				<TableCell className="p-0" colSpan={100}>
+					<div className="">{subRowTwo}</div>
 				</TableCell>
 			</tr>
 		)}

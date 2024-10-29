@@ -35,6 +35,7 @@ function GameFeed({ initialGames, week, nested, teamPage }) {
 		queryKey: ["sortState"],
 		queryFn: teamPage ? getTeamPageSortState : getSortState,
 		initialData: teamPage ? getTeamPageSortState : getSortState,
+		refetchOnMount: "always",
 	});
 
 	const { data: view } = useQuery({
@@ -49,10 +50,13 @@ function GameFeed({ initialGames, week, nested, teamPage }) {
 		queryKey: ["favoriteTeams"],
 	});
 
-	// console.log("favoriteTeams", favoriteTeams);
-
 	useEffect(() => {
 		if (!sortState) return;
+
+		if (teamPage) {
+			sortState.sortKey = "date";
+			sortState.sortOrder = "asc";
+		}
 
 		const sortedMatchups = [...matchups].sort((a, b) => {
 			// Ensure favoriteTeams is an array

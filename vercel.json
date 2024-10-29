@@ -25,6 +25,30 @@
 			"schedule": "*/5 0-6 * * 5"
 		},
 		{
+			"path": "/api/cron/scoreboard",
+			"schedule": "*/5 12-23 * * 1"
+		},
+		{
+			"path": "/api/cron/scoreboard",
+			"schedule": "*/5 0-6 * * 2"
+		},
+		{
+			"path": "/api/cron/scoreboard",
+			"schedule": "*/5 12-23 * * 2"
+		},
+		{
+			"path": "/api/cron/scoreboard",
+			"schedule": "*/5 0-6 * * 3"
+		},
+		{
+			"path": "/api/cron/scoreboard",
+			"schedule": "*/5 12-23 * * 3"
+		},
+		{
+			"path": "/api/cron/scoreboard",
+			"schedule": "*/5 0-6 * * 4"
+		},
+		{
 			"path": "/api/cron/rankings",
 			"schedule": "0 21-23,0-16 * * 0-3"
 		},
@@ -59,6 +83,30 @@
 		{
 			"path": "/api/cron/records",
 			"schedule": "0 8 * * 1"
+		},
+		{
+			"path": "/api/cron/records",
+			"schedule": "0 12-23 * * 1"
+		},
+		{
+			"path": "/api/cron/records",
+			"schedule": "0 0-6 * * 2"
+		},
+		{
+			"path": "/api/cron/records",
+			"schedule": "0 12-23 * * 2"
+		},
+		{
+			"path": "/api/cron/records",
+			"schedule": "0 0-6 * * 3"
+		},
+		{
+			"path": "/api/cron/records",
+			"schedule": "0 12-23 * * 3"
+		},
+		{
+			"path": "/api/cron/records",
+			"schedule": "0 0-6 * * 4"
 		}
 	]
 }

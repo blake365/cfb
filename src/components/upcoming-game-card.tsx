@@ -64,6 +64,8 @@ export function UpcomingGameCard({ game, pageType }) {
 		}
 	}
 
+	console.log(game.team_awayTeamId);
+
 	return (
 		<div
 			className="relative w-full max-w-2xl"
@@ -128,7 +130,9 @@ export function UpcomingGameCard({ game, pageType }) {
 								</Link>
 
 								<span className="text-sm text-muted-foreground">
-									{game.team_awayTeamId.wins} - {game.team_awayTeamId.losses}
+									{game.team_awayTeamId.wins} - {game.team_awayTeamId.losses} |{" "}
+									{game.team_awayTeamId.conferenceWins} -{" "}
+									{game.team_awayTeamId.conferenceLosses}
 								</span>
 								<span className="text-xl font-bold">{game.awayTeamScore}</span>
 							</div>
@@ -181,7 +185,9 @@ export function UpcomingGameCard({ game, pageType }) {
 									{game.team_homeTeamId.name}
 								</Link>
 								<span className="text-sm text-muted-foreground">
-									{game.team_homeTeamId.wins} - {game.team_homeTeamId.losses}
+									{game.team_homeTeamId.wins} - {game.team_homeTeamId.losses} |{" "}
+									{game.team_homeTeamId.conferenceWins} -{" "}
+									{game.team_homeTeamId.conferenceLosses}
 								</span>
 								<span className="text-xl font-bold">{game.homeTeamScore}</span>
 							</div>
