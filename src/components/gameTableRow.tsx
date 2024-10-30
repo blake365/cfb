@@ -64,7 +64,7 @@ export function GameTableRow({ game, pageType }) {
 		}
 	}
 
-	let {
+	const {
 		isGameActive,
 		isError,
 		isLoading,
@@ -82,14 +82,6 @@ export function GameTableRow({ game, pageType }) {
 		awayTeamId: game.team_awayTeamId.id,
 	});
 
-	let shownAwayScore = game.awayTeamScore;
-	let shownHomeScore = game.homeTeamScore;
-
-	if (isGameActive) {
-		shownAwayScore = awayScore;
-		shownHomeScore = homeScore;
-	}
-
 	// console.log(shownAwayScore, shownHomeScore);
 
 	return (
@@ -104,7 +96,7 @@ export function GameTableRow({ game, pageType }) {
 			subRowTwo={
 				isGameActive ? (
 					<div>
-						<span className="text-red-500 mx-4">Live-ish</span> Quarter {period}{" "}
+						<span className="text-red-500 mx-4">LIVE-ish</span> Quarter {period}{" "}
 						| {clock} | {lastPlay}
 					</div>
 				) : null
@@ -150,7 +142,7 @@ export function GameTableRow({ game, pageType }) {
 				{isGameActive && possession === "away" && (
 					<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
 				)}
-				{shownAwayScore}
+				{isGameActive ? awayScore : game.awayTeamScore}
 			</TableCell>
 			<TableCell className="max-w-[140px]">
 				<div className="flex flex-col">
@@ -191,7 +183,7 @@ export function GameTableRow({ game, pageType }) {
 				{isGameActive && possession === "home" && (
 					<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
 				)}
-				{shownHomeScore}
+				{isGameActive ? homeScore : game.homeTeamScore}
 			</TableCell>
 			<TableCell className="border-r border-muted">
 				{game.rivalry ? (
@@ -216,9 +208,6 @@ export function GameTableRow({ game, pageType }) {
 			<TableCell className=" text-xs border-r border-muted">
 				{game.tvNetwork?.toUpperCase().slice(0, 6)}
 			</TableCell>
-			{/* <TableCell className=" text-xs">
-				<span>{game.location}</span>
-			</TableCell> */}
 			<TableCell className=" text-xs border-r border-muted">
 				{game.spread}
 			</TableCell>

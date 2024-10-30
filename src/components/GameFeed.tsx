@@ -35,7 +35,6 @@ function GameFeed({ initialGames, week, nested, teamPage }) {
 		queryKey: ["sortState"],
 		queryFn: teamPage ? getTeamPageSortState : getSortState,
 		initialData: teamPage ? getTeamPageSortState : getSortState,
-		refetchOnMount: "always",
 	});
 
 	const { data: view } = useQuery({
