@@ -78,11 +78,9 @@ export function GameTableRow({ game, pageType }) {
 		gameStart: game.gameStart,
 		gameCompleted: game.gameCompleted,
 		gameId: game.id,
-		homeTeamId: game.team_homeTeamId.id,
-		awayTeamId: game.team_awayTeamId.id,
+		homeTeamId: game.team_homeTeamId.cfbApiId,
+		awayTeamId: game.team_awayTeamId.cfbApiId,
 	});
-
-	// console.log(shownAwayScore, shownHomeScore);
 
 	return (
 		<TableRow
@@ -138,12 +136,19 @@ export function GameTableRow({ game, pageType }) {
 					</div>
 				</div>
 			</TableCell>
-			<TableCell className="border-r border-muted text-center">
-				{isGameActive && possession === "away" && (
-					<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
-				)}
-				{isGameActive ? awayScore : game.awayTeamScore}
-			</TableCell>
+
+			{isGameActive ? (
+				<TableCell className="border-r border-muted text-center">
+					{isGameActive && possession === "away" && (
+						<CIcon icon={cilAmericanFootball} className="w-4 h-4 mx-auto" />
+					)}
+					{awayScore}
+				</TableCell>
+			) : (
+				<TableCell className="border-r border-muted text-center">
+					{game.awayTeamScore}
+				</TableCell>
+			)}
 			<TableCell className="max-w-[140px]">
 				<div className="flex flex-col">
 					<div

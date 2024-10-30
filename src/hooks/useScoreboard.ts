@@ -77,6 +77,12 @@ export function useScoreboard({
 		refetchOnMount: true,
 	});
 
+	// console.log(data);
+
+	if (isError) {
+		console.log("Error fetching scoreboard data");
+	}
+
 	return {
 		isGameActive,
 		isError,

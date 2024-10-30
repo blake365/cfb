@@ -64,7 +64,7 @@ export function UpcomingGameCard({ game, pageType }) {
 		}
 	}
 
-	console.log(game.team_awayTeamId);
+	// console.log(game.team_awayTeamId);
 
 	return (
 		<div
