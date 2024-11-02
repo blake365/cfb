@@ -29,7 +29,7 @@ export default function TopNavBar() {
 						<FavoriteTeams />
 						<ResponsiveComboBox label="Find A Team" />
 						<Link href="/conferences" className="hover:underline shadow-md">
-							<Button variant="outline">Conferences</Button>
+							<Button>Conferences</Button>
 						</Link>
 					</div>
 
@@ -53,11 +53,36 @@ export default function TopNavBar() {
 									<ResponsiveComboBox label="Find A Team" />
 									<SheetClose asChild>
 										<Link href="/conferences" className="mt-4">
-											<Button
-												variant="outline"
-												className="w-full justify-center mt-4 shadow-md"
-											>
-												Conferences
+											<Button className="w-full justify-center mt-4 shadow-md">
+												All Conferences
+											</Button>
+										</Link>
+									</SheetClose>
+									<SheetClose asChild>
+										<Link href="/conferences/ACC" className="mt-4">
+											<Button className="w-full justify-center mt-4 shadow-md">
+												ACC
+											</Button>
+										</Link>
+									</SheetClose>
+									<SheetClose asChild>
+										<Link href="/conferences/Big%2012" className="mt-4">
+											<Button className="w-full justify-center mt-4 shadow-md">
+												Big 12
+											</Button>
+										</Link>
+									</SheetClose>
+									<SheetClose asChild>
+										<Link href="/conferences/Big%20Ten" className="mt-4">
+											<Button className="w-full justify-center mt-4 shadow-md">
+												Big Ten
+											</Button>
+										</Link>
+									</SheetClose>
+									<SheetClose asChild>
+										<Link href="/conferences/SEC" className="mt-4">
+											<Button className="w-full justify-center mt-4 shadow-md">
+												SEC
 											</Button>
 										</Link>
 									</SheetClose>

@@ -42,7 +42,7 @@ function GameFeed({ initialGames, week, nested, teamPage }) {
 		queryFn: getView,
 	});
 
-	console.log("view", view);
+	// console.log("view", view);
 
 	// access the favorite teams from react query
 	const { data: favoriteTeams } = useQuery({

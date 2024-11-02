@@ -9,18 +9,6 @@ import { useScoreboard } from "@/hooks/useScoreboard";
 import { CIcon } from "@coreui/icons-react";
 import { cilAmericanFootball } from "@coreui/icons";
 
-function hexToRgb(hex: string) {
-	hex = hex.replace(/^#/, "");
-
-	// Parse r, g, b values
-	let bigint = parseInt(hex, 16);
-	let r = (bigint >> 16) & 255;
-	let g = (bigint >> 8) & 255;
-	let b = bigint & 255;
-
-	return `${r}, ${g}, ${b}`;
-}
-
 export function GameTableRow({ game, pageType }) {
 	if (!game) {
 		return <div>No game data available</div>;
@@ -94,8 +82,8 @@ export function GameTableRow({ game, pageType }) {
 			subRowTwo={
 				isGameActive ? (
 					<div>
-						<span className="text-red-500 mx-4">LIVE-ish</span> Quarter {period}{" "}
-						| {clock} | {lastPlay}
+						<span className="text-red-500 mx-4 font-bold">LIVE-ish</span>{" "}
+						Quarter {period} | {clock} | {lastPlay}
 					</div>
 				) : null
 			}
