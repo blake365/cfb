@@ -7,7 +7,6 @@ export default async function handler(request, response) {
 
 	const result2 = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/games/getBettingLines/hello`)
 
-
 	const result3 = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cron/updateInterestScores`)
 
 	const data = await result.json()
