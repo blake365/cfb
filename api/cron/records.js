@@ -3,7 +3,7 @@ export const edge = true
 
 export default async function handler(request, response) {
 
-	const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/teams/updateRecords/hello`)
+	fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/teams/updateRecords/hello`)
 
-	return response.status(result.status)
+	return response.json({ message: "Record update sent" });
 }
