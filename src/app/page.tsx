@@ -30,7 +30,7 @@ export default function Home() {
 	} = useQuery({
 		queryKey: ["games", currentWeek],
 		queryFn: () => fetchGames(currentWeek),
-		refetchInterval: 1000 * 60 * 1,
+		refetchInterval: 1000 * 60 * 5,
 	});
 
 	// console.log(status);

@@ -31,7 +31,7 @@ export default function Page({
 		queryKey: ["conference games", params.week],
 		queryFn: () => fetchGames(params.slug, params.week),
 		enabled: !!params.slug,
-		refetchInterval: 1000 * 60 * 1,
+		refetchInterval: 1000 * 60 * 5,
 	});
 
 	if (error) return <div>An error occurred: {error.message}</div>;

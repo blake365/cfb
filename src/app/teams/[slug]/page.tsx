@@ -37,7 +37,7 @@ export default function Page({
 		queryKey: ["team games", params.slug],
 		queryFn: () => fetchGames(params.slug),
 		refetchOnMount: true,
-		refetchInterval: 1000 * 60 * 1,
+		refetchInterval: 1000 * 60 * 5,
 	});
 
 	const {

@@ -23,7 +23,7 @@ export default function Page({ params }: { params: { number: string } }) {
 	} = useQuery({
 		queryKey: ["week games", params.number],
 		queryFn: () => fetchGames(params.number),
-		refetchInterval: 1000 * 60 * 1,
+		refetchInterval: 1000 * 60 * 5,
 	});
 
 	// console.log(teamData)

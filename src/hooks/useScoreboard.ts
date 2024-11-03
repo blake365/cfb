@@ -73,7 +73,7 @@ export function useScoreboard({
 		},
 		enabled: isGameActive,
 		placeholderData,
-		refetchInterval: 10000,
+		refetchInterval: 1000 * 20,
 		refetchOnMount: true,
 	});
 
