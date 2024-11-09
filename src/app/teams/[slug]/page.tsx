@@ -4,7 +4,7 @@ import TeamStats from "@/components/TeamStats";
 import { useQuery } from "@tanstack/react-query";
 import GameFeedSkeleton from "@/components/GameFeedSkeleton";
 import GameFeed from "@/components/GameFeed";
-
+import weeks from "@/lib/weeks";
 const fetchGames = async (slug) => {
 	console.log("i am fetching games");
 	const response = await fetch(
@@ -40,6 +40,11 @@ export default function Page({
 		refetchInterval: 1000 * 60 * 5,
 	});
 
+	const now = new Date().getTime();
+	const week = weeks.find((week) => {
+		return now >= week.startDate.getTime() && now <= week.endDate.getTime();
+	});
+
 	const {
 		data: teamData,
 		status: teamStatus,
@@ -49,7 +54,7 @@ export default function Page({
 		queryFn: () => fetchTeamStats(params.slug),
 	});
 
-	console.log(teamData);
+	// console.log(teamData);
 
 	if (error) return <div>An error occurred: {error.message}</div>;
 
@@ -65,7 +70,7 @@ export default function Page({
 					<GameFeed
 						teamPage={true}
 						initialGames={games}
-						week={null}
+						week={week}
 						nested={`teams/${params.slug}`}
 					/>
 				)}

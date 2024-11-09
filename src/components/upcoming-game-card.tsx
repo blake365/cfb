@@ -21,7 +21,7 @@ function hexToRgb(hex: string) {
 	return `${r}, ${g}, ${b}`;
 }
 
-export function UpcomingGameCard({ game, pageType }) {
+export function UpcomingGameCard({ game, pageType, poll }) {
 	if (!game) {
 		return <div>No game data available</div>;
 	}
@@ -96,7 +96,7 @@ export function UpcomingGameCard({ game, pageType }) {
 								}`}
 							>
 								<Avatar className="h-12 w-12 font-bold">
-									{game.team_awayTeamId.apRank ? (
+									{poll === "AP" && game.team_awayTeamId.apRank ? (
 										<Badge
 											className="absolute top-6 right-12"
 											style={{
@@ -104,6 +104,15 @@ export function UpcomingGameCard({ game, pageType }) {
 											}}
 										>
 											#{game.team_awayTeamId.apRank}
+										</Badge>
+									) : poll === "CFP" && game.team_awayTeamId.cfpRank ? (
+										<Badge
+											className="absolute top-6 right-12"
+											style={{
+												backgroundColor: game.team_awayTeamId.primaryColor,
+											}}
+										>
+											#{game.team_awayTeamId.cfpRank}
 										</Badge>
 									) : (
 										""
@@ -152,7 +161,8 @@ export function UpcomingGameCard({ game, pageType }) {
 								}`}
 							>
 								<Avatar className="h-12 w-12">
-									{game.team_homeTeamId.apRank ? (
+									{/* if poll is AP, show AP rank, if CFP, show cfp rank */}
+									{poll === "AP" && game.team_homeTeamId.apRank ? (
 										<Badge
 											className="absolute top-6 left-12"
 											style={{
@@ -160,6 +170,15 @@ export function UpcomingGameCard({ game, pageType }) {
 											}}
 										>
 											#{game.team_homeTeamId.apRank}
+										</Badge>
+									) : poll === "CFP" && game.team_homeTeamId.cfpRank ? (
+										<Badge
+											className="absolute top-6 left-12"
+											style={{
+												backgroundColor: game.team_homeTeamId.primaryColor,
+											}}
+										>
+											#{game.team_homeTeamId.cfpRank}
 										</Badge>
 									) : (
 										""

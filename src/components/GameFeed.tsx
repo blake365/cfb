@@ -49,6 +49,11 @@ function GameFeed({ initialGames, week, nested, teamPage }) {
 		queryKey: ["favoriteTeams"],
 	});
 
+	let poll = "AP";
+	if (week.week >= 11) {
+		poll = "CFP";
+	}
+
 	useEffect(() => {
 		if (!sortState) return;
 
@@ -128,7 +133,7 @@ function GameFeed({ initialGames, week, nested, teamPage }) {
 							</TableHeader>
 							<TableBody>
 								{matchups.map((game) => (
-									<GameTableRow key={game.id} game={game} />
+									<GameTableRow key={game.id} game={game} poll={poll} />
 								))}
 							</TableBody>
 						</Table>
@@ -151,7 +156,7 @@ function GameFeed({ initialGames, week, nested, teamPage }) {
 			)}
 			<div className="flex flex-col gap-10 mt-4 mx-4">
 				{matchups.map((game) => (
-					<UpcomingGameCard key={game.id} game={game} />
+					<UpcomingGameCard key={game.id} game={game} poll={poll} />
 				))}
 			</div>
 		</div>

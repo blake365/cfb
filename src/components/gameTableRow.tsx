@@ -9,7 +9,7 @@ import { useScoreboard } from "@/hooks/useScoreboard";
 import { CIcon } from "@coreui/icons-react";
 import { cilAmericanFootball } from "@coreui/icons";
 
-export function GameTableRow({ game, pageType }) {
+export function GameTableRow({ game, pageType, poll }) {
 	if (!game) {
 		return <div>No game data available</div>;
 	}
@@ -107,8 +107,11 @@ export function GameTableRow({ game, pageType }) {
 							href={`/teams/${game.team_awayTeamId.name}`}
 							className="font-semibold hover:underline "
 						>
-							{game.team_awayTeamId.apRank &&
-								`(#${game.team_awayTeamId.apRank}) `}
+							{poll === "AP" && game.team_awayTeamId.apRank
+								? `(#${game.team_awayTeamId.apRank}) `
+								: poll === "CFP" && game.team_awayTeamId.cfpRank
+									? `(#${game.team_awayTeamId.cfpRank}) `
+									: ""}
 							{game.team_awayTeamId.name}
 						</Link>
 					</div>
@@ -155,8 +158,11 @@ export function GameTableRow({ game, pageType }) {
 							href={`/teams/${game.team_homeTeamId.name}`}
 							className="hover:underline"
 						>
-							{game.team_homeTeamId.apRank &&
-								`(#${game.team_homeTeamId.apRank}) `}
+							{poll === "AP" && game.team_homeTeamId.apRank
+								? `(#${game.team_homeTeamId.apRank}) `
+								: poll === "CFP" && game.team_homeTeamId.cfpRank
+									? `(#${game.team_homeTeamId.cfpRank}) `
+									: ""}
 							{game.team_homeTeamId.name}
 						</Link>
 					</div>

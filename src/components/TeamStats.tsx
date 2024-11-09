@@ -68,6 +68,9 @@ function TeamStats({ teamData }) {
 						</p>
 
 						<div>
+							{teamData.cfpRank && (
+								<p className="text-lg font-semibold">CFP: {teamData.cfpRank}</p>
+							)}
 							{teamData.apRank && (
 								<p className="text-lg font-semibold">
 									AP Rank: {teamData.apRank}
@@ -75,7 +78,7 @@ function TeamStats({ teamData }) {
 							)}
 							{teamData.coachesRank && (
 								<p className="text-lg font-semibold">
-									Coaches Poll Rank: {teamData.coachesRank}
+									Coaches: {teamData.coachesRank}
 								</p>
 							)}
 						</div>
